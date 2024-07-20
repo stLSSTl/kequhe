@@ -1,7 +1,5 @@
 server:
-  port: 8080
-
-
+  port: 8081
 spring:
   profiles:
     active: dev
@@ -11,14 +9,13 @@ spring:
       url: jdbc:mysql://${science.datasource.host}:${science.datasource.port}/${science.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${science.datasource.username}
       password: ${science.datasource.password}
-  main:
-    allow-circular-references: true
+  #main:
+  # allow-circular-references: true
 
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.science.entity
+#type-aliases-package: com.science.entity
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
-

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement //开启注解方式的事务管理
 @Slf4j
 public class MultimediaApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MultimediaApplication.class, args);
     }
