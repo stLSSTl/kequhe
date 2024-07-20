@@ -1,4 +1,4 @@
 package com.science.mapper;
 
-public class testMapper {
+public interface UserMapper {
 }
