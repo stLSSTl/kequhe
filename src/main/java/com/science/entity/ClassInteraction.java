@@ -7,19 +7,18 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassInteraction implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     private int id;
 
     private String name;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
     private String createUser;
 

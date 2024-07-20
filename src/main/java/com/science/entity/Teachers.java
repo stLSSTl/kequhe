@@ -12,8 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teachers implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     private int teacherId;
 
     private int userId;

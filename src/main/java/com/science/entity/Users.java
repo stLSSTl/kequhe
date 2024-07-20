@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor  //生成一个无参构造函数
 @AllArgsConstructor
 public class Users implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     private int uid;
 
     private String username;
@@ -32,6 +31,6 @@ public class Users implements Serializable {
 
     private String createUser;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
 }
