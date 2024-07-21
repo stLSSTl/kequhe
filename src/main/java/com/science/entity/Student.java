@@ -11,9 +11,12 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Parents implements Serializable {
-    private int parentId;
+public class Student implements Serializable {
+    private int studentId;
     private int userId;
-    private String parentName;
-    private String parentPhone;
+    private String studentName;
+    private String school;
+    private String grade;
+    private String classes;
+    private Integer credit;
 }

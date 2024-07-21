@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teachers implements Serializable {
+public class Teacher implements Serializable {
     private int teacherId;
     private int userId;
     private String teacherName;
