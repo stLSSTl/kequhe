@@ -13,12 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Teachers implements Serializable {
     private int teacherId;
-
     private int userId;
-
     private String teacherName;
-
     private String school;
-
     private String phone;
 }

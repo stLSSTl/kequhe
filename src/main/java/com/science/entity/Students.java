@@ -13,16 +13,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Students implements Serializable {
     private int studentId;
-
     private int userId;
-
     private String studentName;
-
     private String school;
-
     private String grade;
-
     private String classes;
-
     private Integer credit;
 }

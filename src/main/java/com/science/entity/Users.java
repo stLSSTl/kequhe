@@ -17,19 +17,12 @@ import java.util.Date;
 public class Users implements Serializable {
     private int uid;
     private String username;
-
     private String password;
-
     private String salt;
-
     private UserType userType;
-
     private Integer isDelete;
-
     private String avatar;
-
     private String createUser;
-
     private Date createTime;
 
 }

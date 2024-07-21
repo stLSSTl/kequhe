@@ -13,11 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Admin implements Serializable {
     private int adminId;
-
     private int userId;
-
     private int adminName;
-
     private int adminPhone;
 
 }

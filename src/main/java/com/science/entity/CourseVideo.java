@@ -15,18 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class CourseVideo implements Serializable {
     private int videoId;
-
     private String videoName;
-
     private Integer status;
-
     private Date createTime;
-
     private String createUser;
-
     private String coverUrl;
-
     private String videoUrl;
-
     private String introduction;
 }

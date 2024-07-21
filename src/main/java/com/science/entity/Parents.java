@@ -13,10 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Parents implements Serializable {
     private int parentId;
-
     private int userId;
-
     private String parentName;
-
     private String parentPhone;
 }
