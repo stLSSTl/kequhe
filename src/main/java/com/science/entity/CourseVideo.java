@@ -18,7 +18,7 @@ public class CourseVideo implements Serializable {
 
     private String videoName;
 
-    private int status;
+    private Integer status;
 
     private Date createTime;
 

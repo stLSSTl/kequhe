@@ -24,5 +24,5 @@ public class Students implements Serializable {
 
     private String classes;
 
-    private int credit;
+    private Integer credit;
 }

@@ -16,7 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class Users implements Serializable {
     private int uid;
-
     private String username;
 
     private String password;
@@ -25,7 +24,7 @@ public class Users implements Serializable {
 
     private UserType userType;
 
-    private int isDelete;
+    private Integer isDelete;
 
     private String avatar;
 
