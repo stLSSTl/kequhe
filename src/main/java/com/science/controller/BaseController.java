@@ -1,9 +1,7 @@
 package com.science.controller;
 
 import com.science.entity.User;
-import com.science.service.ex.InsertException;
-import com.science.service.ex.ServiceException;
-import com.science.service.ex.UsernameDuplicatedException;
+import com.science.service.ex.*;
 import com.science.util.JsonResult;
 import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +18,15 @@ public class BaseController {
         } else if (e instanceof UsernameDuplicatedException) {
             jsonResult.setState(4000);
             jsonResult.setMessage("用户名重复异常");
+        } else if (e instanceof JWTCreationException) {
+            jsonResult.setState(5001);
+            jsonResult.setMessage("生成jwt令牌异常");
+        } else if (e instanceof AccountNotFoundException) {
+            jsonResult.setState(4001);
+            jsonResult.setMessage("用户不存在异常");
+        } else if (e instanceof PasswordErrorException) {
+            jsonResult.setState(4002);
+            jsonResult.setMessage("密码错误异常");
         }
         return jsonResult;
     }
