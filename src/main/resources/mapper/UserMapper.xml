@@ -21,7 +21,6 @@
                      #{createUser},#{createTime}
                                 )
     </insert>
-
     <select id="findByUsername" resultMap="UserEntityMap">
             SELECT * FROM t_users WHERE username=#{username}
     </select>

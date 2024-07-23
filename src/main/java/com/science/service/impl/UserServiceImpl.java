@@ -33,6 +33,7 @@ public class UserServiceImpl implements IUserService {
         User user=new User();
         user.setUsername(userRegDTO.getUsername());
         user.setUserType(userRegDTO.getUserType());
+        user.setAvatar(userRegDTO.getAvatar());
         user.setSalt(salt);
         String MD5Password=getMD5Password(oldPassword,salt);
         user.setPassword(MD5Password);
@@ -62,24 +63,21 @@ public class UserServiceImpl implements IUserService {
         //存储前端传回的账号密码
         String username = userLoginDTO.getUsername();
         String password = userLoginDTO.getPassword();
-
         //根据用户名查询数据库中的数据
         User result = userMapper.findByUsername(username);
-
         //处理各种异常（用户名不存在、密码不对等等）
         //如果账号不存在
         if(result == null){
             throw new AccountNotFoundException("账号不存在");
         }
-
+        String salt=result.getSalt();
         //密码对比
         // 对前端传回的密码进行MD5解密
-        password = DigestUtils.md5DigestAsHex(password.getBytes());
+        password = getMD5Password(password,salt);
         //密码错误
         if(!password.equals(result.getPassword())){
             throw new PasswordErrorException("密码错误");
         }
-
         return result;
     }
 }

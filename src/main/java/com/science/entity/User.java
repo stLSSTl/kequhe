@@ -1,6 +1,5 @@
 package com.science.entity;
 
-import com.science.enumeration.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
