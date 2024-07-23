@@ -5,12 +5,14 @@
 <!--namespace属性用于指定当前映射文件与哪个文件进行映射，因此需要标注接口的完整路径
     即“com.cy.store.mapper.UserMapper”-->
 <mapper namespace="com.science.mapper.UserMapper">
+
     <resultMap id="UserEntityMap" type="com.science.entity.User">
         <id column="uid" property="uid"></id>
         <result column="user_type" property="userType"></result>
         <result column="create_user" property="createUser"></result>
         <result column="create_time" property="createTime"></result>
     </resultMap>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
             INSERT INTO t_users(
                 uid,username,password,salt,user_type,is_delete,avatar,create_user,create_time
@@ -19,6 +21,7 @@
                      #{createUser},#{createTime}
                                 )
     </insert>
+
     <select id="findByUsername" resultMap="UserEntityMap">
             SELECT * FROM t_users WHERE username=#{username}
     </select>

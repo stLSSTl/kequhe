@@ -1,5 +1,8 @@
 package com.science.service.ex;
 
+/**
+ * 用户名重复异常
+ */
 public class UsernameDuplicatedException extends ServiceException{
     public UsernameDuplicatedException() {
     }

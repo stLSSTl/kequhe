@@ -1,10 +1,13 @@
 package com.science.service.impl;
 
+import com.science.dto.UserLoginDTO;
 import com.science.dto.UserRegDTO;
 import com.science.entity.User;
 import com.science.mapper.UserMapper;
 import com.science.service.IUserService;
+import com.science.service.ex.AccountNotFoundException;
 import com.science.service.ex.InsertException;
+import com.science.service.ex.PasswordErrorException;
 import com.science.service.ex.UsernameDuplicatedException;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +50,36 @@ public class UserServiceImpl implements IUserService {
             password=DigestUtils.md5DigestAsHex((salt+password+salt).getBytes()).toUpperCase();
         }
         return password;
+    }
+
+    /**
+     * 根据前端传回的数据，在数据库进行查找，返回查找值
+     * @param userLoginDTO
+     * @return
+     */
+    @Override
+    public User login(UserLoginDTO userLoginDTO) {
+        //存储前端传回的账号密码
+        String username = userLoginDTO.getUsername();
+        String password = userLoginDTO.getPassword();
+
+        //根据用户名查询数据库中的数据
+        User result = userMapper.findByUsername(username);
+
+        //处理各种异常（用户名不存在、密码不对等等）
+        //如果账号不存在
+        if(result == null){
+            throw new AccountNotFoundException("账号不存在");
+        }
+
+        //密码对比
+        // 对前端传回的密码进行MD5解密
+        password = DigestUtils.md5DigestAsHex(password.getBytes());
+        //密码错误
+        if(!password.equals(result.getPassword())){
+            throw new PasswordErrorException("密码错误");
+        }
+
+        return result;
     }
 }
