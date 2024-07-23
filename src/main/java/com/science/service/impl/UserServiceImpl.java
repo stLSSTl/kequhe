@@ -79,6 +79,7 @@ public class UserServiceImpl implements IUserService {
         }catch (JWTCreationException e){
             throw new JWTCreationException("生成jwt令牌出错",e);
         }
+        userLoginDTO.setPassword(null);
         UserLoginResult userLoginResult=new UserLoginResult(userLoginDTO,jwtToken);
         return userLoginResult;
     }
