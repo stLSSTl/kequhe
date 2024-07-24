@@ -12,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student implements Serializable {
+    private User user;
     private int studentId;
     private int userId;
     private String studentName;
