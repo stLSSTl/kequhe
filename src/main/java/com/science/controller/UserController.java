@@ -27,7 +27,8 @@ public class UserController extends BaseController {
     private IUserService userService;
     @PostMapping("reg")
     @ApiOperation("注册功能测试")
-    public JsonResult<Void> reg(UserRegDTO userRegDTO) {
+    public JsonResult<Void> reg(@RequestBody UserRegDTO userRegDTO) {
+        //这里如果不加@RequestBody注解就不能通过json数据川籍哪里
         userService.reg(userRegDTO);
         return new JsonResult<Void>(OK);
     }

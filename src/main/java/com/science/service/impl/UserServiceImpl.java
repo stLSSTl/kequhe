@@ -64,6 +64,7 @@ public class UserServiceImpl implements IUserService {
         String username = userLoginDTO.getUsername();
         String password = userLoginDTO.getPassword();
         User result = userMapper.findByUsername(username);
+        userLoginDTO.setUid(result.getUid());
         if(result == null){
             throw new AccountNotFoundException("账号不存在");
         }

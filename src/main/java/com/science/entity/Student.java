@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 @Data
@@ -12,7 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student implements Serializable {
-    private User user;
     private int studentId;
     private int userId;
     private String studentName;

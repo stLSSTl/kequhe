@@ -27,6 +27,9 @@ public class BaseController {
         } else if (e instanceof PasswordErrorException) {
             jsonResult.setState(4002);
             jsonResult.setMessage("密码错误异常");
+        } else if (e instanceof UserIdDuplicatedException) {
+            jsonResult.setState(4003);
+            jsonResult.setMessage("该学生用户信息已完善的异常");
         }
         return jsonResult;
     }

@@ -10,6 +10,9 @@
         <result column="user_id" property="userId"></result>
         <result column="student_name" property="studentName"></result>
     </resultMap>
+    <select id="findByUserId" resultType="java.lang.Integer">
+            SELECT * FROM t_students WHERE user_id=#{userId}
+    </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="studentId">
           INSERT INTO t_students(
                                  student_id,user_id,student_name,school,grade,classes,credit
