@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace属性用于指定当前映射文件与哪个文件进行映射，因此需要标注接口的完整路径
+    即“com.cy.store.mapper.Teacher”-->
+<mapper namespace="com.science.mapper.TeacherMapper">
+
+    <insert id="InsertVideo" useGeneratedKeys="true" keyProperty="videoId">
+        insert into t_course_video(
+            video_id, video_name, status, create_time, create_user, cover_url, video_url, introduction
+        ) VALUES (
+            #{videoId},#{videoName},#{status},#{createTime},#{createUser},#{coverUrl},#{videoUrl},#{introduction}
+                          )
+    </insert>
+    
+    
+    <delete id="DeleteVideoByName" parameterType="java.lang.String">
+        delete from t_course_video
+        where video_name = #{name}
+    </delete>
+    
+    <update id="ModifyVideo">
+        update t_course_video
+        <set>
+            <if test="videoId != null">video_id = #{videoId},</if>
+            <if test="videoName != null">video_name = #{videoName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="coverUrl != null">cover_url = #{coverUrl},</if>
+            <if test="videoUrl != null">video_url = #{videoUrl},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+        </set>
+        <where>
+           video_name = #{videoName}
+        </where>
+    </update>
+    
+    <insert id="InsertInteraction" useGeneratedKeys="true" keyProperty="id">
+        insert into t_class_interaction(
+                  id, name, create_time, create_user, title, content, url
+        ) VALUES (
+                  #{id},#{name},#{createTime},#{createUser},#{title},#{content},#{url}
+                         )
+    </insert>
+    
+    <delete id="DeleteInteractionByName" parameterType="java.lang.String">
+        delete from t_class_interaction
+        where name = #{name}
+    </delete>
+
+    <update id="ModifyInteraction">
+        update t_class_interaction
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="url != null">url = #{url},</if>
+        </set>
+        <where>
+           name = #{name}
+        </where>
+    </update>
+
+</mapper>
