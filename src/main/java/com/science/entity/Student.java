@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Student implements Serializable {
     private int studentId;
-    private int userId;
+    private int userId;//与User类中的uid对应,uid在users表中为主键，在这里作外键
     private String studentName;
     private String school;
     private String grade;
