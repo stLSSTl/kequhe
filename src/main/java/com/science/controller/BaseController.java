@@ -30,6 +30,12 @@ public class BaseController {
         } else if (e instanceof UserIdDuplicatedException) {
             jsonResult.setState(4003);
             jsonResult.setMessage("该学生用户信息已完善的异常");
+        } else if (e instanceof SpeechToTextException) {
+            jsonResult.setState(5001);
+            jsonResult.setMessage("语音转文字失败的异常");
+        } else if (e instanceof AIAnswerServiceException) {
+            jsonResult.setState(5002);
+            jsonResult.setMessage("AI回答失败的异常");
         }
         return jsonResult;
     }
