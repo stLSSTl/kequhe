@@ -4,6 +4,8 @@ import com.science.entity.CourseVideo;
 import com.science.entity.Parent;
 import com.science.entity.Student;
 import com.science.entity.Teacher;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
     /**
@@ -11,60 +13,74 @@ public interface AdminMapper {
      * @param student
      * @return
      */
-    public Integer InsertStudent(Student student);
+    public Integer insertStudent(Student student);
 
     /**
      * 根据学生姓名删除学生信息
-     * @param name
+     * @param id
      * @return
      */
-    public Integer DeleteStudentByName(String name);
+    public Integer deleteStudentByUserId(int id);
 
     /**
      * 修改学生信息
      * @param student
      */
-    public void ModifyStudent(Student student);
+    public Integer modifyStudent(Student student);
+
+    /**
+     * 根据userId查找老师
+     * @param userId
+     * @return
+     */
+    public Integer findTeacherById(@Param("userId") int userId);
 
     /**
      * 新增老师
      * @param teacher
      * @return
      */
-    public Integer InsertTeacher(Teacher teacher);
+    public Integer insertTeacher(Teacher teacher);
 
     /**
      * 根据老师姓名删除老师
-     * @param name
+     * @param id
      * @return
      */
-    public Integer DeleteTeacherByName(String name);
+    public Integer deleteTeacherByUserId(int id);
 
     /**
      * 修改老师信息
      * @param teacher
      */
-    public void ModifyTeacher(Teacher teacher);
+    public Integer modifyTeacher(Teacher teacher);
+
+    /**
+     * 根据userId查找家长
+     * @param userId
+     * @return
+     */
+    public Integer findParentById(@Param("userId") int userId);
 
     /**
      * 新增家长
      * @param parent
      * @return
      */
-    public Integer InsertParent(Parent parent);
+    public Integer insertParent(Parent parent);
 
     /**
      * 根据家长姓名删除家长
-     * @param name
+     * @param id
      * @return
      */
-    public Integer DeleteParentByName(String name);
+    public Integer deleteParentByUserId(int id);
 
     /**
      * 修改家长信息
      * @param parent
      */
-    public void ModifyParent(Parent parent);
+    public Integer modifyParent(Parent parent);
 
 
 }
