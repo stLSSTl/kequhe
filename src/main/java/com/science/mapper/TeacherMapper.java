@@ -15,7 +15,6 @@ public interface TeacherMapper {
      * @return
      */
     public CourseVideo findVideoById(@Param("videoId") int videoId);
-
     /**
      * 老师上传视频
      * @param courseVideo
@@ -28,12 +27,6 @@ public interface TeacherMapper {
      * @return
      */
     public Integer deleteVideoById(int id);
-
-    /**
-     * 老师修改视频信息
-     * @param courseVideo
-     */
-    public Integer modifyVideo(CourseVideo courseVideo);
 
 
     /**
