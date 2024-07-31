@@ -41,10 +41,8 @@ public class TeacherServiceImpl implements ITeacherService {
         //将dto类的数据存到entity里面
         courseVideo.setVideoId(courseVideoDTO.getVideoId());
         //判断是否已存在
-        CourseVideo res = teacherMapper.findVideoById(courseVideo.getVideoId());
-        if(res != null){
-            throw new VideoIdDuplicatedException("该视频已被上传");
-        }
+        //CourseVideo res = teacherMapper.findVideoById(courseVideo.getVideoId());
+
 
         courseVideo.setVideoName(courseVideoDTO.getVideoName());
         courseVideo.setStatus(courseVideoDTO.getStatus());

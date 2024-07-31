@@ -8,9 +8,9 @@
     <select id="findByUserId" resultType="java.lang.Integer">
         SELECT * FROM t_teachers WHERE user_id=#{userId}
     </select>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="TeacherId">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="teacherId">
         INSERT INTO t_teachers(
-            teacher_id,user_id,teacher_name,school,phone,
+            teacher_id,user_id,teacher_name,school,phone
         )VALUES (
                  #{teacherId},#{userId},#{teacherName},#{school},#{phone}
                         )

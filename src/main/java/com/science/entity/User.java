@@ -22,5 +22,4 @@ public class User implements Serializable {
     private String avatar;
     private String createUser;//不需要前端输入
     private Date createTime;//不需要前端输入
-
 }

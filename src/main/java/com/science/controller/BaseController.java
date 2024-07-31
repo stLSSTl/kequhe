@@ -64,11 +64,7 @@ public class BaseController {
         }else if (e instanceof InteractionNotFoundException) {
             jsonResult.setState(4011);
             jsonResult.setMessage("该课堂互动表不存在的异常");
-        }else if (e instanceof VideoIdDuplicatedException) {
-            jsonResult.setState(4012);
-            jsonResult.setMessage("视频已存在的异常");
-        }
-        else if (e instanceof VideoNotFoundException) {
+        }else if (e instanceof VideoNotFoundException) {
             jsonResult.setState(4013);
             jsonResult.setMessage("视频不存在的异常");
         }
