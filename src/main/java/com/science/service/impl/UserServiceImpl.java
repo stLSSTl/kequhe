@@ -71,6 +71,7 @@ public class UserServiceImpl implements IUserService {
         userLoginResponseDTO.setUid(result.getUid());
         userLoginResponseDTO.setUsername(result.getUsername());
         userLoginResponseDTO.setAvatar(result.getAvatar());
+        userLoginResponseDTO.setUserType(result.getUserType());
         String salt=result.getSalt();
         password = getMD5Password(password,salt);
         //密码错误
