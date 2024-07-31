@@ -6,7 +6,7 @@
 <mapper namespace="com.science.mapper.AdminMapper">
 
     <!--新增学生-->
-    <insert id="InsertStudent" useGeneratedKeys="true" keyProperty="studentId">
+    <insert id="insertStudent" useGeneratedKeys="true" keyProperty="studentId">
         insert into t_students(
             student_id, user_id, student_name, school, grade, classes, credit
         )
@@ -15,14 +15,14 @@
                )
     </insert>
 
-    <!--根据学生姓名删除学生信息-->
-    <delete id="DeleteStudentByName" parameterType="java.lang.String">
+    <!--根据学生id删除学生信息-->
+    <delete id="deleteStudentByUserId" parameterType="java.lang.Integer">
         delete from t_students
-        where student_name = #{name}
+        where user_id = #{id}
     </delete>
     
     <!--修改学生信息-->
-    <update id="ModifyStudent">
+    <update id="modifyStudent">
         update t_students
         <set>
             <if test="studentId != null">student_id = #{studentId},</if>
@@ -34,12 +34,18 @@
             <if test="credit != null">credit = #{credit},</if>
         </set>
         <where>
-            student_name = #{studentName}
+            user_id = #{userId}
         </where>
     </update>
     
+    <!--查找教师-->
+    <select id="findTeacherById" resultType="java.lang.Integer">
+        select * from t_teachers where user_id = #{userId}
+    </select>
+    
+    
     <!--新增老师-->
-    <insert id="InsertTeacher" useGeneratedKeys="true" keyProperty="teacherId">
+    <insert id="insertTeacher" useGeneratedKeys="true" keyProperty="teacherId">
         insert into t_teachers(
             teacher_id, user_id, teacher_name, school, phone
         )VALUES (
@@ -48,13 +54,14 @@
     </insert>
 
     <!--根据老师姓名删除老师-->
-    <delete id="DeleteTeacherByName" parameterType="java.lang.String">
+    <delete id="deleteTeacherByUserId" parameterType="java.lang.Integer">
         delete from t_teachers
-        where teacher_name = #{name}
+        where user_id = #{id}
     </delete>
     
     <!--修改老师信息-->
-    <update id="ModifyTeacher">
+    <update id="modifyTeacher">
+        update t_teachers
         <set>
             <if test="teacherId != null">teacher_id = #{teacherId},</if>
             <if test="userId != null">user_id = #{userId},</if>
@@ -63,12 +70,17 @@
             <if test="phone != null">phone = #{phone},</if>
         </set>
         <where>
-            teacher_name = #{teacherName}
+            user_id = #{userId}
         </where>
     </update>
-    
+
+    <!--根据id查找家长-->
+    <select id="findParentById" resultType="java.lang.Integer">
+        select * from t_parents where user_id = #{userId}
+    </select>
+
     <!--新增家长-->
-    <insert id="InsertParent" useGeneratedKeys="true" keyProperty="parentId">
+    <insert id="insertParent" useGeneratedKeys="true" keyProperty="parentId">
         insert into t_parents(
             parent_id, user_id, parent_name, parent_phone
         ) VALUES(
@@ -76,14 +88,15 @@
                )
     </insert>
 
-    <!--根据家长姓名删除家长-->
-    <delete id="DeleteParentByName" parameterType="java.lang.String">
+    <!--根据家长id删除家长-->
+    <delete id="deleteParentByUserId" parameterType="java.lang.Integer">
         delete from t_parents
-        where parent_name = #{name}
+        where user_id = #{id}
     </delete>
 
     <!--修改家长信息-->
-    <update id="ModifyParent">
+    <update id="modifyParent">
+        update t_parents
         <set>
             <if test="parentId != null">parent_id = #{parentId},</if>
             <if test="userId != null">user_id = #{userId},</if>
@@ -91,7 +104,7 @@
             <if test="parentPhone != null">parent_phone = #{parentPhone},</if>
         </set>
         <where>
-            parent_name = #{parentName}
+            user_id = #{userId}
         </where>
     </update>
 

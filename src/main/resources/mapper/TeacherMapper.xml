@@ -6,7 +6,12 @@
     即“com.cy.store.mapper.Teacher”-->
 <mapper namespace="com.science.mapper.TeacherMapper">
 
-    <insert id="InsertVideo" useGeneratedKeys="true" keyProperty="videoId">
+    <select id="findVideoById" parameterType="int" resultType="com.science.entity.CourseVideo">
+        select * from t_course_video where video_id = #{videoId}
+    </select>
+
+
+    <insert id="insertVideo" useGeneratedKeys="true" keyProperty="videoId">
         insert into t_course_video(
             video_id, video_name, status, create_time, create_user, cover_url, video_url, introduction
         ) VALUES (
@@ -15,12 +20,12 @@
     </insert>
     
     
-    <delete id="DeleteVideoByName" parameterType="java.lang.String">
+    <delete id="deleteVideoById" parameterType="java.lang.Integer">
         delete from t_course_video
-        where video_name = #{name}
+        where video_id = #{id}
     </delete>
     
-    <update id="ModifyVideo">
+    <update id="modifyVideo">
         update t_course_video
         <set>
             <if test="videoId != null">video_id = #{videoId},</if>
@@ -33,11 +38,15 @@
             <if test="introduction != null">introduction = #{introduction},</if>
         </set>
         <where>
-           video_name = #{videoName}
+            video_id = #{videoId}
         </where>
     </update>
+
+    <select id="findInteractionById" parameterType="int" resultType="com.science.entity.ClassInteraction">
+        select * from t_class_interaction where id = #{id}
+    </select>
     
-    <insert id="InsertInteraction" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertInteraction" useGeneratedKeys="true" keyProperty="id">
         insert into t_class_interaction(
                   id, name, create_time, create_user, title, content, url
         ) VALUES (
@@ -45,12 +54,12 @@
                          )
     </insert>
     
-    <delete id="DeleteInteractionByName" parameterType="java.lang.String">
+    <delete id="deleteInteractionById" parameterType="java.lang.Integer">
         delete from t_class_interaction
-        where name = #{name}
+        where id = #{id}
     </delete>
 
-    <update id="ModifyInteraction">
+    <update id="modifyInteraction">
         update t_class_interaction
         <set>
             <if test="id != null">id = #{id},</if>
@@ -62,7 +71,7 @@
             <if test="url != null">url = #{url},</if>
         </set>
         <where>
-           name = #{name}
+            id = #{id}
         </where>
     </update>
 
