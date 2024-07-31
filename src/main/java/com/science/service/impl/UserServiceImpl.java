@@ -1,6 +1,7 @@
 package com.science.service.impl;
 
-import com.science.dto.UserLoginDTO;
+import com.science.dto.UserLoginRequestDTO;
+import com.science.dto.UserLoginResponseDTO;
 import com.science.dto.UserRegDTO;
 import com.science.entity.User;
 import com.science.mapper.UserMapper;
@@ -8,7 +9,6 @@ import com.science.service.IUserService;
 import com.science.service.ex.*;
 import com.science.util.JWTUtil;
 import com.science.util.UserLoginResult;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -56,18 +56,22 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 根据前端传回的数据，在数据库进行查找，返回查找值
-     * @param userLoginDTO
+     * @param userLoginRequestDTO
      * @return
      */
     @Override
-    public UserLoginResult login(UserLoginDTO userLoginDTO) {
-        String username = userLoginDTO.getUsername();
-        String password = userLoginDTO.getPassword();
+    public UserLoginResult login(UserLoginRequestDTO userLoginRequestDTO) {
+        UserLoginResponseDTO userLoginResponseDTO=new UserLoginResponseDTO();
+        String username = userLoginRequestDTO.getUsername();
+        String password = userLoginRequestDTO.getPassword();
         User result = userMapper.findByUsername(username);
-        userLoginDTO.setUid(result.getUid());
         if(result == null){
             throw new AccountNotFoundException("账号不存在");
         }
+        userLoginResponseDTO.setUid(result.getUid());
+        userLoginResponseDTO.setUsername(result.getUsername());
+        userLoginResponseDTO.setAvatar(result.getAvatar());
+        userLoginResponseDTO.setUserType(result.getUserType());
         String salt=result.getSalt();
         password = getMD5Password(password,salt);
         //密码错误
@@ -80,8 +84,7 @@ public class UserServiceImpl implements IUserService {
         }catch (JWTCreationException e){
             throw new JWTCreationException("生成jwt令牌出错",e);
         }
-        userLoginDTO.setPassword(null);
-        UserLoginResult userLoginResult=new UserLoginResult(userLoginDTO,jwtToken);
+        UserLoginResult userLoginResult=new UserLoginResult(userLoginResponseDTO,jwtToken);
         return userLoginResult;
     }
 }

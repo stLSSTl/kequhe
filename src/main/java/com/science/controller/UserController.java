@@ -1,10 +1,8 @@
 package com.science.controller;
 
-import com.science.dto.UserLoginDTO;
+import com.science.dto.UserLoginRequestDTO;
 import com.science.dto.UserRegDTO;
-import com.science.entity.User;
 import com.science.service.IUserService;
-import com.science.util.JWTUtil;
 import com.science.util.JsonResult;
 import com.science.util.UserLoginResult;
 import io.swagger.annotations.Api;
@@ -14,10 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("users")
@@ -35,8 +29,8 @@ public class UserController extends BaseController {
 
     @PostMapping("login")
     @ApiOperation("登录功能测试")
-    public JsonResult<UserLoginResult> login(@RequestBody UserLoginDTO userLoginDTO) {
-        UserLoginResult userLoginResult = userService.login(userLoginDTO);
+    public JsonResult<UserLoginResult> login(@RequestBody UserLoginRequestDTO userLoginRequestDTO) {
+        UserLoginResult userLoginResult = userService.login(userLoginRequestDTO);
         return new JsonResult<>(OK, userLoginResult);
     }
 }

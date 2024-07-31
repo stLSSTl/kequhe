@@ -1,15 +1,15 @@
 package com.science.util;
 
-import com.science.dto.UserLoginDTO;
+import com.science.dto.UserLoginResponseDTO;
 import lombok.Data;
 
 @Data
 public class UserLoginResult {
-    private UserLoginDTO userLoginDTO;
+    private UserLoginResponseDTO userLoginResponseDTO;
     private String jwtToken;
 
-    public UserLoginResult(UserLoginDTO userLoginDTO, String jwtToken) {
-        this.userLoginDTO = userLoginDTO;
+    public UserLoginResult(UserLoginResponseDTO userLoginResponseDTO, String jwtToken) {
+        this.userLoginResponseDTO = userLoginResponseDTO;
         this.jwtToken = jwtToken;
     }
 }
