@@ -5,6 +5,16 @@
 <!--namespace属性用于指定当前映射文件与哪个文件进行映射，因此需要标注接口的完整路径
     即“com.cy.store.mapper.Teacher”-->
 <mapper namespace="com.science.mapper.TeacherMapper">
+    <select id="findByUserId" resultType="java.lang.Integer">
+        SELECT * FROM t_teachers WHERE user_id=#{userId}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="teacherId">
+        INSERT INTO t_teachers(
+            teacher_id,user_id,teacher_name,school,phone
+        )VALUES (
+                 #{teacherId},#{userId},#{teacherName},#{school},#{phone}
+                        )
+    </insert>
 
     <select id="findVideoById" parameterType="int" resultType="com.science.entity.CourseVideo">
         select * from t_course_video where video_id = #{videoId}

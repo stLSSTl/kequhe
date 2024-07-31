@@ -2,6 +2,7 @@ package com.science.controller;
 
 import com.science.dto.ClassInteractionDTO;
 import com.science.dto.CourseVideoDTO;
+import com.science.dto.TeacherRegDTO;
 import com.science.entity.ClassInteraction;
 import com.science.service.ITeacherService;
 import com.science.util.JsonResult;
@@ -9,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("teacher")
+@RequestMapping("teachers")
 public class TeacherController extends BaseController{
     @Autowired
     private ITeacherService teacherService;
-
+    @PostMapping("reg")
+    public JsonResult<Void> reg(@RequestBody TeacherRegDTO teacherRegDTO){
+        teacherService.reg(teacherRegDTO);
+        return new JsonResult<Void>(OK);
+    }
     /**
      * 添加视频
      * @param courseVideoDTO
@@ -34,17 +39,6 @@ public class TeacherController extends BaseController{
     public JsonResult<Void> deleteVideo(@PathVariable("id") int id){
         teacherService.deleteVideo(id);
         return new JsonResult<Void>(OK);
-    }
-
-    /**
-     * 修改视频信息
-     * @param courseVideoDTO
-     * @return
-     */
-    @PostMapping("updateVideo")
-    public JsonResult<Void> updateVideo(@RequestBody CourseVideoDTO courseVideoDTO){
-        teacherService.updateVideo(courseVideoDTO);
-        return new JsonResult<>(OK);
     }
 
     /**

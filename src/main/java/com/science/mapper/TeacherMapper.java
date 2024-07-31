@@ -2,10 +2,13 @@ package com.science.mapper;
 
 import com.science.entity.ClassInteraction;
 import com.science.entity.CourseVideo;
+import com.science.entity.Teacher;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface TeacherMapper {
-
+    public Integer findByUserId(int UserId);
+    public Integer insert(Teacher teacher);
     /**
      * 根据id查找视频
      * @param videoId
@@ -31,6 +34,7 @@ public interface TeacherMapper {
      * @param courseVideo
      */
     public Integer modifyVideo(CourseVideo courseVideo);
+
 
     /**
      * 根据id查找课堂互动表
