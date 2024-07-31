@@ -15,11 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class ClassInteraction implements Serializable {
     private int id;
-    private String name;
-    private Date createTime;
-    private String createUser;
     private String title;
     private String content;
     private String url;
-
+    private Date createTime;
+    private String createUser;
 }
