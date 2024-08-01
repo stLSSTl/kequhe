@@ -6,6 +6,7 @@ import com.science.dto.ClassInteractionDTO;
 import com.science.dto.CourseVideoDTO;
 import com.science.dto.TeacherRegDTO;
 import com.science.entity.ClassInteraction;
+import com.science.service.IFileUploadService;
 import com.science.service.ITeacherService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class TeacherController extends BaseController{
     @Autowired
     private ITeacherService teacherService;
+    @Autowired
+    private IFileUploadService fileUploadService;
     @PostMapping("reg")
     public JsonResult<Void> reg(@RequestBody TeacherRegDTO teacherRegDTO){
         teacherService.reg(teacherRegDTO);
@@ -30,9 +33,10 @@ public class TeacherController extends BaseController{
     @PostMapping("addVideo")
     public JsonResult<Void> addVideo(@RequestParam String courseVideoDTOJson,
                                      @RequestParam MultipartFile file) throws JsonProcessingException {
+        String filePath=fileUploadService.uploadFile(file);
         ObjectMapper objectMapper = new ObjectMapper();
         CourseVideoDTO courseVideoDTO = objectMapper.readValue(courseVideoDTOJson, CourseVideoDTO.class);
-        teacherService.addVideo(courseVideoDTO,file);
+        teacherService.addVideo(courseVideoDTO,filePath);
         return new JsonResult<Void>(OK);
     }
 

@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ITeacherService {
     public void reg(TeacherRegDTO teacherRegDTO);
-    public void addVideo(CourseVideoDTO courseVideoDTO, MultipartFile file);
+    public void addVideo(CourseVideoDTO courseVideoDTO, String videoPath);
     public void deleteVideo(int id);
     public void addInteraction(ClassInteractionDTO classInteractionDTO);
     public void deleteInteraction(int id);

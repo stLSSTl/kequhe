@@ -11,6 +11,6 @@ public class CourseVideoDTO implements Serializable {
     private Integer status;
     private String createUser;
     private String coverUrl;
-    //private String videoUrl;
     private String introduction;
 }
+

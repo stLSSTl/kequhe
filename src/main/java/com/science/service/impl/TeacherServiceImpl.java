@@ -39,24 +39,15 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public void addVideo(CourseVideoDTO courseVideoDTO, MultipartFile file) {
-        String videoFileName = file.getOriginalFilename();
-        String videoFilePath = "D:/stl/video/" + videoFileName;
-        try {
-            file.transferTo(new File(videoFilePath));
-        }catch (IOException e){
-            e.printStackTrace();
-            throw new FileUploadException("上传文件异常");
-        }
+    public void addVideo(CourseVideoDTO courseVideoDTO, String videoPath) {
         CourseVideo courseVideo = new CourseVideo();
-
         courseVideo.setVideoName(courseVideoDTO.getVideoName());
         courseVideo.setStatus(courseVideoDTO.getStatus());
         courseVideo.setCreateUser(courseVideoDTO.getCreateUser());
         courseVideo.setCoverUrl(courseVideoDTO.getCoverUrl());
         courseVideo.setIntroduction(courseVideoDTO.getIntroduction());
         courseVideo.setCreateTime(new Date());
-        courseVideo.setVideoUrl(videoFilePath);
+        courseVideo.setVideoUrl(videoPath);
         //插入数据库
         Integer rows = teacherMapper.insertVideo(courseVideo);
         if (rows != 1){
