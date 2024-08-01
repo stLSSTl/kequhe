@@ -1,5 +1,7 @@
 package com.science.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.science.dto.ClassInteractionDTO;
 import com.science.dto.CourseVideoDTO;
 import com.science.dto.TeacherRegDTO;
@@ -8,6 +10,7 @@ import com.science.service.ITeacherService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("teachers")
@@ -21,12 +24,15 @@ public class TeacherController extends BaseController{
     }
     /**
      * 添加视频
-     * @param courseVideoDTO
+     * @param
      * @return
      */
     @PostMapping("addVideo")
-    public JsonResult<Void> addVideo(@RequestBody CourseVideoDTO courseVideoDTO){
-        teacherService.addVideo(courseVideoDTO);
+    public JsonResult<Void> addVideo(@RequestParam String courseVideoDTOJson,
+                                     @RequestParam MultipartFile file) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CourseVideoDTO courseVideoDTO = objectMapper.readValue(courseVideoDTOJson, CourseVideoDTO.class);
+        teacherService.addVideo(courseVideoDTO,file);
         return new JsonResult<Void>(OK);
     }
 

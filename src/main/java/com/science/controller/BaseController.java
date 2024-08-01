@@ -67,6 +67,9 @@ public class BaseController {
         }else if (e instanceof VideoNotFoundException) {
             jsonResult.setState(4013);
             jsonResult.setMessage("视频不存在的异常");
+        } else if (e instanceof FileUploadException) {
+            jsonResult.setState(4014);
+            jsonResult.setMessage("文件上传的异常");
         }
         return jsonResult;
     }

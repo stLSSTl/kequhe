@@ -14,7 +14,10 @@ import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 @Service
@@ -36,22 +39,24 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public void addVideo(CourseVideoDTO courseVideoDTO) {
+    public void addVideo(CourseVideoDTO courseVideoDTO, MultipartFile file) {
+        String videoFileName = file.getOriginalFilename();
+        String videoFilePath = "D:/stl/video/" + videoFileName;
+        try {
+            file.transferTo(new File(videoFilePath));
+        }catch (IOException e){
+            e.printStackTrace();
+            throw new FileUploadException("上传文件异常");
+        }
         CourseVideo courseVideo = new CourseVideo();
-        //将dto类的数据存到entity里面
-        courseVideo.setVideoId(courseVideoDTO.getVideoId());
-        //判断是否已存在
-        //CourseVideo res = teacherMapper.findVideoById(courseVideo.getVideoId());
-
 
         courseVideo.setVideoName(courseVideoDTO.getVideoName());
         courseVideo.setStatus(courseVideoDTO.getStatus());
-        courseVideo.setCreateTime(new Date());
         courseVideo.setCreateUser(courseVideoDTO.getCreateUser());
         courseVideo.setCoverUrl(courseVideoDTO.getCoverUrl());
-        courseVideo.setVideoUrl(courseVideoDTO.getVideoUrl());
         courseVideo.setIntroduction(courseVideoDTO.getIntroduction());
-
+        courseVideo.setCreateTime(new Date());
+        courseVideo.setVideoUrl(videoFilePath);
         //插入数据库
         Integer rows = teacherMapper.insertVideo(courseVideo);
         if (rows != 1){
@@ -66,7 +71,6 @@ public class TeacherServiceImpl implements ITeacherService {
         if (res == null){  //视频不存在
             throw new VideoNotFoundException("该视频不存在");
         }
-
         //删除视频操作
         Integer rows = teacherMapper.deleteVideoById(id);
         if(rows != 1){

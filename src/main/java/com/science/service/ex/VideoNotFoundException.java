@@ -3,7 +3,6 @@ package com.science.service.ex;
 public class VideoNotFoundException extends ServiceException {
     public VideoNotFoundException() {
     }
-
     public VideoNotFoundException(String message) {
         super(message);
     }
