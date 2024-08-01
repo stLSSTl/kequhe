@@ -5,8 +5,10 @@ import com.science.entity.Parent;
 import com.science.entity.Student;
 import com.science.entity.Teacher;
 import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface AdminMapper {
     /**
      * 新增学生

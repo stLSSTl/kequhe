@@ -28,6 +28,9 @@ public class BaseController {
         }else if (e instanceof UpdateException) {
             jsonResult.setState(5004);
             jsonResult.setMessage("更新信息时的异常");
+        }else if (e instanceof FileUploadFailedException){
+            jsonResult.setState(5005);
+            jsonResult.setMessage("文件上传的异常");
         } else if (e instanceof UsernameDuplicatedException) {
             jsonResult.setState(4000);
             jsonResult.setMessage("用户名重复异常");
