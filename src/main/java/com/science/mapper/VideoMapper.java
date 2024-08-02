@@ -7,5 +7,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface VideoMapper {
     public Integer insertVideo(CourseVideo courseVideo);
-    public Integer deleteVideoById(int id);
+    public CourseVideo findVideoById(@Param("videoId") int videoId);
+    public Integer deleteVideoById(int videoId);
+
 }

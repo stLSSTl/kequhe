@@ -1,17 +1,12 @@
 package com.science.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.science.dto.ClassInteractionDTO;
-import com.science.dto.CourseVideoDTO;
 import com.science.dto.TeacherRegDTO;
-import com.science.entity.ClassInteraction;
-import com.science.service.IFileUploadService;
+import com.science.service.IAliOssService;
 import com.science.service.ITeacherService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("teachers")
@@ -19,7 +14,7 @@ public class TeacherController extends BaseController{
     @Autowired
     private ITeacherService teacherService;
     @Autowired
-    private IFileUploadService fileUploadService;
+    private IAliOssService aliOssService;
     @PostMapping("reg")
     public JsonResult<Void> reg(@RequestBody TeacherRegDTO teacherRegDTO){
         teacherService.reg(teacherRegDTO);

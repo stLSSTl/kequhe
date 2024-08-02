@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.science.dto.CourseVideoDTO;
 import com.science.entity.CourseVideo;
-import com.science.service.IFileUploadService;
-import com.science.service.IVideoService;
+import com.science.service.IAliOssService;
+import com.science.service.ICourseVideoService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,25 +14,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-
 @RestController
 @RequestMapping("/videos")
 public class VideoController extends BaseController{
     @Autowired
-    private IFileUploadService fileUploadService;
+    private IAliOssService aliOssService;
     @Autowired
-    private IVideoService videoService;
+    private ICourseVideoService courseVideoService;
     @PostMapping("addVideo")
     public JsonResult<CourseVideo> addVideo(@RequestParam String courseVideoDTOJson,
                                      @RequestParam MultipartFile file) throws JsonProcessingException {
-        String filePath=fileUploadService.uploadFile(file);
+        String filePath=aliOssService.uploadFile(file);
 
         ObjectMapper objectMapper = new ObjectMapper();
         CourseVideoDTO courseVideoDTO = objectMapper.readValue(courseVideoDTOJson, CourseVideoDTO.class);
-        CourseVideo courseVideo=videoService.convertToEntity(courseVideoDTO);
+        CourseVideo courseVideo=courseVideoService.convertToEntity(courseVideoDTO);
         courseVideo.setVideoUrl(filePath);
-        videoService.insertVideo(courseVideo);
+        courseVideoService.insertVideo(courseVideo);
         return new JsonResult<>(OK,courseVideo);
+    }
+    @PostMapping("deleteVideo")
+    public JsonResult<Void> deleteVideo(int videoId){
+        CourseVideo courseVideo=courseVideoService.findVideoById(videoId);
+        aliOssService.deleteFile(courseVideo.getVideoUrl());
+        courseVideoService.deleteVideo(videoId);
+        return new JsonResult<Void>(OK);
     }
 }

@@ -14,6 +14,9 @@
     </insert>
     <delete id="deleteVideoById" parameterType="java.lang.Integer">
         delete from t_course_video
-        where video_id = #{id}
+        where video_id = #{videoId}
     </delete>
+    <select id="findVideoById" parameterType="int" resultType="com.science.entity.CourseVideo">
+        select * from t_course_video where video_id = #{videoId}
+    </select>
 </mapper>
