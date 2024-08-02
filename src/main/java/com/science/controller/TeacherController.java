@@ -25,20 +25,7 @@ public class TeacherController extends BaseController{
         teacherService.reg(teacherRegDTO);
         return new JsonResult<Void>(OK);
     }
-    /**
-     * 添加视频
-     * @param
-     * @return
-     */
-    @PostMapping("addVideo")
-    public JsonResult<Void> addVideo(@RequestParam String courseVideoDTOJson,
-                                     @RequestParam MultipartFile file) throws JsonProcessingException {
-        String filePath=fileUploadService.uploadFile(file);
-        ObjectMapper objectMapper = new ObjectMapper();
-        CourseVideoDTO courseVideoDTO = objectMapper.readValue(courseVideoDTOJson, CourseVideoDTO.class);
-        teacherService.addVideo(courseVideoDTO,filePath);
-        return new JsonResult<Void>(OK);
-    }
+
 
     /**
      * 根据id删除视频

@@ -19,17 +19,6 @@
     <select id="findVideoById" parameterType="int" resultType="com.science.entity.CourseVideo">
         select * from t_course_video where video_id = #{videoId}
     </select>
-    <insert id="insertVideo" useGeneratedKeys="true" keyProperty="videoId">
-        insert into t_course_video(
-            video_id, video_name, status, create_time, create_user, cover_url, video_url, introduction
-        ) VALUES (
-            #{videoId},#{videoName},#{status},#{createTime},#{createUser},#{coverUrl},#{videoUrl},#{introduction}
-                          )
-    </insert>
-    <delete id="deleteVideoById" parameterType="java.lang.Integer">
-        delete from t_course_video
-        where video_id = #{id}
-    </delete>
 
 
     <select id="findInteractionById" parameterType="int" resultType="com.science.entity.ClassInteraction">

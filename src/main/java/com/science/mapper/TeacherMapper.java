@@ -15,11 +15,7 @@ public interface TeacherMapper {
      * @return
      */
     public CourseVideo findVideoById(@Param("videoId") int videoId);
-    /**
-     * 老师上传视频
-     * @param courseVideo
-     */
-    public Integer insertVideo(CourseVideo courseVideo);
+
 
     /**
      * 老师根据视频id删除视频

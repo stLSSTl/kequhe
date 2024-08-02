@@ -5,6 +5,7 @@ import com.science.entity.Student;
 import com.science.entity.User;
 import com.science.mapper.StudentMapper;
 import com.science.service.IStudentService;
+import com.science.service.ex.InsertException;
 import com.science.service.ex.UserIdDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class StudentServiceImpl implements IStudentService {
         student.setGrade(studentRegDTO.getGrade());
         student.setClasses(studentRegDTO.getClasses());
         student.setCredit(studentRegDTO.getCredit());
-        studentMapper.insert(student);
+        rows=studentMapper.insert(student);
+        if(rows!=1){
+            throw new InsertException("插入学生时发生异常");
+        }
     }
 }
