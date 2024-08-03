@@ -1,12 +1,8 @@
 package com.science.controller;
 
-import com.science.entity.Parent;
-import com.science.entity.User;
 import com.science.service.ex.*;
 import com.science.util.JsonResult;
-import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import springfox.documentation.spring.web.json.Json;
 
 public class BaseController {
     public static final int OK=200;
@@ -40,19 +36,19 @@ public class BaseController {
         } else if (e instanceof UserIdDuplicatedException) {
             jsonResult.setState(4003);
             jsonResult.setMessage("该学生用户信息已完善的异常");
-        } else if (e instanceof StudentIdDuplicatedException) {
+        } else if (e instanceof StudentDuplicatedException) {
             jsonResult.setState(4004);
             jsonResult.setMessage("该学生已存在的异常");
         }else if (e instanceof StudentNotFoundException) {
             jsonResult.setState(4005);
             jsonResult.setMessage("该学生不存在的异常");
-        }else if (e instanceof TeacherIdDuplicatedException) {
+        }else if (e instanceof TeacherDuplicatedException) {
             jsonResult.setState(4006);
             jsonResult.setMessage("该教师已存在的异常");
         }else if (e instanceof TeacherNotFoundException) {
             jsonResult.setState(4007);
             jsonResult.setMessage("该教师不存在的异常");
-        }else if (e instanceof ParentIdDuplicatedException) {
+        }else if (e instanceof ParentDuplicatedException) {
             jsonResult.setState(4008);
             jsonResult.setMessage("该家长已存在的异常");
         }else if (e instanceof ParentNotFoundException) {

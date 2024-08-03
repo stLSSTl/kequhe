@@ -11,7 +11,6 @@ import com.science.mapper.AdminMapper;
 import com.science.mapper.StudentMapper;
 import com.science.service.IAdminService;
 import com.science.service.ex.*;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,7 @@ public class AdminServiceImpl implements IAdminService {
         //判断是否该学生已经存在
         Integer res = studentMapper.findByUserId(student.getUserId());
         if(res != null){
-            throw new StudentIdDuplicatedException("该学生已经存在");
+            throw new StudentDuplicatedException("该学生已经存在");
         }
 
         student.setStudentName(studentRegDTO.getStudentName());
@@ -90,7 +89,7 @@ public class AdminServiceImpl implements IAdminService {
         //先判断该教师是否存在
         Integer res = adminMapper.findTeacherById(teacherDTO.getUserId());
         if(res != null){
-            throw new TeacherIdDuplicatedException("该教师已经存在");
+            throw new TeacherDuplicatedException("该教师已经存在");
         }
 
         Teacher teacher = new Teacher();
@@ -149,7 +148,7 @@ public class AdminServiceImpl implements IAdminService {
         //先判断该家长是否存在
         Integer res = adminMapper.findParentById(parentDTO.getUserId());
         if(res != null){
-            throw new ParentIdDuplicatedException("该家长已经存在");
+            throw new ParentDuplicatedException("该家长已经存在");
         }
 
         Parent parent = new Parent();

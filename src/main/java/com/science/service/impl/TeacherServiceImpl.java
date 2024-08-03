@@ -38,22 +38,7 @@ public class TeacherServiceImpl implements ITeacherService {
         teacherMapper.insert(teacher);
     }
 
-    @Override
-    public void addVideo(CourseVideoDTO courseVideoDTO, String videoPath) {
-        CourseVideo courseVideo = new CourseVideo();
-        courseVideo.setVideoName(courseVideoDTO.getVideoName());
-        courseVideo.setStatus(courseVideoDTO.getStatus());
-        courseVideo.setCreateUser(courseVideoDTO.getCreateUser());
-        courseVideo.setCoverUrl(courseVideoDTO.getCoverUrl());
-        courseVideo.setIntroduction(courseVideoDTO.getIntroduction());
-        courseVideo.setCreateTime(new Date());
-        courseVideo.setVideoUrl(videoPath);
-        //插入数据库
-        Integer rows = teacherMapper.insertVideo(courseVideo);
-        if (rows != 1){
-            throw new InsertException("插入数据时产生未知异常");
-        }
-    }
+
 
     @Override
     public void deleteVideo(int id) {
