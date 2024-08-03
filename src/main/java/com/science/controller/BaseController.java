@@ -66,6 +66,9 @@ public class BaseController {
         } else if (e instanceof FileUploadException) {
             jsonResult.setState(4014);
             jsonResult.setMessage("文件上传的异常");
+        }else if (e instanceof CreditErrorException) {
+            jsonResult.setState(4015);
+            jsonResult.setMessage("积分产生未知异常");
         }
         return jsonResult;
     }
