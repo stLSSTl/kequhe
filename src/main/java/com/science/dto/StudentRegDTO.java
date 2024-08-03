@@ -11,5 +11,4 @@ public class StudentRegDTO implements Serializable {
     private String school;
     private String grade;
     private String classes;
-    private Integer credit;
 }

@@ -6,11 +6,9 @@ import java.io.Serializable;
 
 @Data
 public class CourseVideoDTO implements Serializable {
-    private int videoId;
     private String videoName;
     private Integer status;
     private String createUser;
     private String coverUrl;
     private String introduction;
 }
-

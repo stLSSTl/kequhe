@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CourseVideoServiceImpl implements ICourseVideoService {
@@ -41,6 +42,12 @@ public class CourseVideoServiceImpl implements ICourseVideoService {
     public CourseVideo findVideoById(int videoId) {
         CourseVideo courseVideo=videoMapper.findVideoById(videoId);
         return courseVideo;
+    }
+
+    @Override
+    public List<CourseVideo> getVideosByCreateUser(String createUser) {
+        List<CourseVideo> list=videoMapper.getVideosByCreateUser(createUser);
+        return list;
     }
 
     @Override
