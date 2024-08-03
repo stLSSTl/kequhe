@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/videos")
 public class VideoController extends BaseController{
@@ -39,5 +41,10 @@ public class VideoController extends BaseController{
         aliOssService.deleteFile(courseVideo.getVideoUrl());
         courseVideoService.deleteVideo(videoId);
         return new JsonResult<Void>(OK);
+    }
+    @PostMapping("showVideos")
+    public JsonResult<List<CourseVideo>> getVideoByCreateUserName(String createUser){
+        List<CourseVideo> list=courseVideoService.getVideosByCreateUser(createUser);
+        return new JsonResult<>(OK,list);
     }
 }

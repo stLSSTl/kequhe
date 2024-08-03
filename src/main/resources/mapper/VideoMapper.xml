@@ -16,7 +16,10 @@
         delete from t_course_video
         where video_id = #{videoId}
     </delete>
-    <select id="findVideoById" parameterType="int" resultType="com.science.entity.CourseVideo">
+    <select id="findVideoById"  resultType="com.science.entity.CourseVideo">
         select * from t_course_video where video_id = #{videoId}
+    </select>
+    <select id="getVideosByCreateUser" resultType="com.science.entity.CourseVideo">
+        select * from t_course_video where create_user=#{createUser}
     </select>
 </mapper>
