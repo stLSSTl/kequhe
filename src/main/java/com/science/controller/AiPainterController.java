@@ -2,6 +2,7 @@ package com.science.controller;
 
 import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisResult;
 import com.alibaba.dashscope.exception.NoApiKeyException;
+import com.science.controller.ex.AIPainterException;
 import com.science.service.IAiPainterService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class AiPainterController {
             String firstImageUrl = result.getOutput().getResults().get(0).toString();
             return new JsonResult<String>(OK,firstImageUrl);
         } catch (NoApiKeyException e) {
-            throw new RuntimeException(e);
+            throw new AIPainterException("AI绘画出现未知异常");
         }
     }
 }

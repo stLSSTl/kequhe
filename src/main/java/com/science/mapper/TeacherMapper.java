@@ -1,28 +1,20 @@
 package com.science.mapper;
 
-import com.science.entity.ClassInteraction;
-import com.science.entity.CourseVideo;
-import com.science.entity.Teacher;
+import com.science.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 @Mapper
 public interface TeacherMapper {
     public Integer findByUserId(int UserId);
     public Integer insert(Teacher teacher);
-    /**
-     * 根据id查找视频
-     * @param videoId
-     * @return
-     */
-    public CourseVideo findVideoById(@Param("videoId") int videoId);
+    public Integer addClassesForTeacher(TeacherClass teacherClass);
+    public List<SchoolClassInfo> getClassInfoByTeacherId(int teacherId);
+    public List<Student> getStudentInfoByClass(SchoolClassInfo schoolClassInfo);
 
 
-    /**
-     * 老师根据视频id删除视频
-     * @param id
-     * @return
-     */
-    public Integer deleteVideoById(int id);
 
 
     /**

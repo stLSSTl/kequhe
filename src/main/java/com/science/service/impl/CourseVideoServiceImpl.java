@@ -56,7 +56,6 @@ public class CourseVideoServiceImpl implements ICourseVideoService {
         courseVideo.setVideoName(courseVideoDTO.getVideoName());
         courseVideo.setStatus(courseVideoDTO.getStatus());
         courseVideo.setCreateUser(courseVideoDTO.getCreateUser());
-        courseVideo.setCoverUrl(courseVideoDTO.getCoverUrl());
         courseVideo.setIntroduction(courseVideoDTO.getIntroduction());
         courseVideo.setCreateTime(new Date());
         return courseVideo;

@@ -24,14 +24,19 @@ public class VideoController extends BaseController{
     @Autowired
     private ICourseVideoService courseVideoService;
     @PostMapping("addVideo")
-    public JsonResult<CourseVideo> addVideo(@RequestParam String courseVideoDTOJson,
-                                     @RequestParam MultipartFile file) throws JsonProcessingException {
-        String filePath=aliOssService.uploadFile(file);
-
+    public JsonResult<CourseVideo> addVideo(
+                                     @RequestParam String courseVideoDTOJson,
+                                     @RequestParam MultipartFile videoFile,
+                                     @RequestParam MultipartFile coverImage) throws JsonProcessingException {
+        String mimeType=videoFile.getContentType();
+        String filePath=aliOssService.uploadFile(videoFile,mimeType);
+        mimeType=coverImage.getContentType();
+        String coverPath=aliOssService.uploadFile(coverImage,mimeType);
         ObjectMapper objectMapper = new ObjectMapper();
         CourseVideoDTO courseVideoDTO = objectMapper.readValue(courseVideoDTOJson, CourseVideoDTO.class);
         CourseVideo courseVideo=courseVideoService.convertToEntity(courseVideoDTO);
         courseVideo.setVideoUrl(filePath);
+        courseVideo.setCoverUrl(coverPath);
         courseVideoService.insertVideo(courseVideo);
         return new JsonResult<>(OK,courseVideo);
     }
@@ -39,6 +44,7 @@ public class VideoController extends BaseController{
     public JsonResult<Void> deleteVideo(int videoId){
         CourseVideo courseVideo=courseVideoService.findVideoById(videoId);
         aliOssService.deleteFile(courseVideo.getVideoUrl());
+        aliOssService.deleteFile(courseVideo.getCoverUrl());
         courseVideoService.deleteVideo(videoId);
         return new JsonResult<Void>(OK);
     }

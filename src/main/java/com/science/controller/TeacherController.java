@@ -1,38 +1,37 @@
 package com.science.controller;
 
 import com.science.dto.ClassInteractionDTO;
+import com.science.dto.TeacherClassDTO;
 import com.science.dto.TeacherRegDTO;
+import com.science.entity.Student;
 import com.science.service.IAliOssService;
 import com.science.service.ITeacherService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("teachers")
 public class TeacherController extends BaseController{
     @Autowired
     private ITeacherService teacherService;
-    @Autowired
-    private IAliOssService aliOssService;
     @PostMapping("reg")
     public JsonResult<Void> reg(@RequestBody TeacherRegDTO teacherRegDTO){
         teacherService.reg(teacherRegDTO);
         return new JsonResult<Void>(OK);
     }
-
-
-    /**
-     * 根据id删除视频
-     * @param id
-     * @return
-     */
-    @DeleteMapping("deleteVideo/{id}")
-    public JsonResult<Void> deleteVideo(@PathVariable("id") int id){
-        teacherService.deleteVideo(id);
+    @PostMapping("addClasses")
+    public JsonResult<Void> addClassesForTeacher(@RequestBody TeacherClassDTO teacherClassDTO){
+        teacherService.addClassesForTeacher(teacherClassDTO);
         return new JsonResult<Void>(OK);
     }
-
+    @GetMapping("getAllStudents")
+    public JsonResult<List<Student>> getAllStudent(int teacherId){
+        List<Student> allStudent=teacherService.getAllStudentByTeacherId(teacherId);
+        return new JsonResult<>(OK,allStudent);
+    }
     /**
      * 添加课堂互动记录
      * @param classInteractionDTO

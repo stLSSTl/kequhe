@@ -14,15 +14,14 @@ import java.util.UUID;
 public class AliOssServiceImpl implements IAliOssService {
     @Autowired
     private AliOssUtil aliOssUtil;
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file,String mimeType) {
         try {
             byte[] bytes = file.getBytes();
             // 生成随机文件名
             String filename = file.getOriginalFilename();
             String fileExtension=filename.substring(filename.lastIndexOf("."));
             String randomFileName = UUID.randomUUID().toString() + fileExtension;
-
-            return aliOssUtil.upload(bytes, randomFileName);
+            return aliOssUtil.upload(bytes,randomFileName,mimeType);
         } catch (IOException e) {
             throw new FileUploadException("文件上传失败: "+e.getMessage());
         }

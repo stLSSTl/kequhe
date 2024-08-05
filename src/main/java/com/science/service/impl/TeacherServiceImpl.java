@@ -2,11 +2,9 @@ package com.science.service.impl;
 
 import com.science.dto.ClassInteractionDTO;
 import com.science.dto.CourseVideoDTO;
+import com.science.dto.TeacherClassDTO;
 import com.science.dto.TeacherRegDTO;
-import com.science.entity.ClassInteraction;
-import com.science.entity.CourseVideo;
-import com.science.entity.Student;
-import com.science.entity.Teacher;
+import com.science.entity.*;
 import com.science.mapper.TeacherMapper;
 import com.science.service.ITeacherService;
 import com.science.service.ex.*;
@@ -18,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements ITeacherService {
@@ -38,20 +38,30 @@ public class TeacherServiceImpl implements ITeacherService {
         teacherMapper.insert(teacher);
     }
 
-
+    @Override
+    public void addClassesForTeacher(TeacherClassDTO teacherClassDTO) {
+        TeacherClass teacherClass=new TeacherClass();
+        teacherClass.setTeacherId(teacherClassDTO.getTeacherId());
+        teacherClass.setTeacherName(teacherClassDTO.getTeacherName());
+        teacherClass.setSchool(teacherClassDTO.getSchool());
+        teacherClass.setGrade(teacherClassDTO.getGrade());
+        teacherClass.setClasses(teacherClassDTO.getClasses());
+        teacherClass.setSubject(teacherClassDTO.getSubject());
+        Integer rows=teacherMapper.addClassesForTeacher(teacherClass);
+        if(rows!=1){
+            throw new InsertException("插入时发生未知异常");
+        }
+    }
 
     @Override
-    public void deleteVideo(int id) {
-        //删除视频前需要先判断视频是否存在
-        CourseVideo res = teacherMapper.findVideoById(id);
-        if (res == null){  //视频不存在
-            throw new VideoNotFoundException("该视频不存在");
+    public List<Student> getAllStudentByTeacherId(int teacherId) {
+        List<SchoolClassInfo> list=teacherMapper.getClassInfoByTeacherId(teacherId);
+        List<Student> allStudents=new ArrayList<>();
+        for(SchoolClassInfo x:list){
+            List<Student> listStudent=teacherMapper.getStudentInfoByClass(x);
+            allStudents.addAll(listStudent);
         }
-        //删除视频操作
-        Integer rows = teacherMapper.deleteVideoById(id);
-        if(rows != 1){
-            throw new DeleteException("删除时产生未知异常");
-        }
+        return allStudents;
     }
 
     @Override
@@ -76,6 +86,8 @@ public class TeacherServiceImpl implements ITeacherService {
             throw new InsertException("插入数据时产生未知异常");
         }
     }
+
+
 
     @Override
     public void deleteInteraction(int id) {

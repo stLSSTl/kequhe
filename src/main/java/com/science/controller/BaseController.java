@@ -1,5 +1,6 @@
 package com.science.controller;
 
+import com.science.controller.ex.AIPainterException;
 import com.science.service.ex.*;
 import com.science.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -69,6 +70,15 @@ public class BaseController {
         }else if (e instanceof CreditErrorException) {
             jsonResult.setState(4015);
             jsonResult.setMessage("积分产生未知异常");
+        } else if (e instanceof AIPainterException) {
+            jsonResult.setState(5005);//宽泛异常暂时用5xxx跟具体异常4xxx区分
+            jsonResult.setMessage("AI绘图发生未知异常");
+        } else if (e instanceof SpeechToTextException) {
+            jsonResult.setState(5006);
+            jsonResult.setMessage("语音识别发生未知异常");
+        } else if (e instanceof AIAnswerServiceException) {
+            jsonResult.setState(5007);
+            jsonResult.setMessage("AI回复发生未知异常");
         }
         return jsonResult;
     }

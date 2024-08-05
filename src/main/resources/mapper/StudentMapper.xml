@@ -13,11 +13,9 @@
     <select id="findByUserId" resultType="java.lang.Integer">
             SELECT * FROM t_students WHERE user_id=#{userId}
     </select>
-
     <select id="findStudentById" resultType="com.science.entity.Student">
         SELECT * FROM t_students WHERE user_id=#{userId}
     </select>
-
     <select id="findStudentsByClass" resultType="com.science.entity.Student">
         SELECT * FROM t_students
         where 1=1
@@ -26,7 +24,6 @@
         <if test="classes != null">and classes = #{classes}</if>
         order by credit desc
     </select>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="studentId">
           INSERT INTO t_students(
                                  student_id,user_id,student_name,school,grade,classes,credit

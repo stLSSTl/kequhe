@@ -5,6 +5,11 @@
 <!--namespace属性用于指定当前映射文件与哪个文件进行映射，因此需要标注接口的完整路径
     即“com.cy.store.mapper.Teacher”-->
 <mapper namespace="com.science.mapper.TeacherMapper">
+    <resultMap id="SchoolClassInfoMap" type="com.science.entity.SchoolClassInfo">
+        <result column="school" property="school"></result>
+        <result column="grade" property="grade"></result>
+        <result column="classes" property="classes"></result>
+    </resultMap>
     <select id="findByUserId" resultType="java.lang.Integer">
         SELECT * FROM t_teachers WHERE user_id=#{userId}
     </select>
@@ -15,9 +20,18 @@
                  #{teacherId},#{userId},#{teacherName},#{school},#{phone}
                         )
     </insert>
-
-    <select id="findVideoById" parameterType="int" resultType="com.science.entity.CourseVideo">
-        select * from t_course_video where video_id = #{videoId}
+    <insert id="addClassesForTeacher" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_teacher_class(
+            id,teacher_id,teacher_name,school,grade,classes,subject
+        )VALUES (
+                 #{id},#{teacherId},#{teacherName},#{school},#{grade},#{classes},#{subject}
+                        )
+    </insert>
+    <select id="getClassInfoByTeacherId" resultMap="SchoolClassInfoMap">
+        SELECT school,grade,classes FROM t_teacher_class WHERE teacher_id=#{teacherId}
+    </select>
+    <select id="getStudentInfoByClass" resultType="com.science.entity.Student">
+        SELECT * FROM t_students WHERE school=#{school} AND grade=#{grade} AND classes=#{classes}
     </select>
 
 
