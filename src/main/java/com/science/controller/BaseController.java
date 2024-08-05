@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 public class BaseController {
     public static final int OK=200;
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class,AIPainterException.class})
     public JsonResult<Void> handleException(Throwable e){
         JsonResult<Void> jsonResult=new JsonResult<Void>(e);
         if(e instanceof InsertException){
