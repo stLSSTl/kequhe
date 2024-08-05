@@ -19,7 +19,7 @@
     <select id="findStudentsByClass" resultType="com.science.entity.Student">
         SELECT * FROM t_students
         where 1=1
-        <if test="school != null">and school = #{school}</if>
+        <if test="school != null">and school = #{school</if>
         <if test="grade != null">and grade = #{grade}</if>
         <if test="classes != null">and classes = #{classes}</if>
         order by credit desc

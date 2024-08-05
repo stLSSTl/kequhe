@@ -70,6 +70,15 @@ public class BaseController {
         }else if (e instanceof CreditErrorException) {
             jsonResult.setState(4015);
             jsonResult.setMessage("积分产生未知异常");
+        } else if (e instanceof ScoreNumberError) {
+            jsonResult.setState(4016);
+            jsonResult.setMessage("成绩不在0-100之间的异常");
+        } else if (e instanceof ScoreRecordNotFoundException) {
+            jsonResult.setState(4017);
+            jsonResult.setMessage("该成绩记录不存在的异常");
+        } else if (e instanceof ScoreIdDuplicatedException) {
+            jsonResult.setState(4018);
+            jsonResult.setMessage("该成绩记录已存在的异常");
         } else if (e instanceof AIPainterException) {
             jsonResult.setState(5005);//宽泛异常暂时用5xxx跟具体异常4xxx区分
             jsonResult.setMessage("AI绘图发生未知异常");

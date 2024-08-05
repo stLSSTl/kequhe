@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.science.mapper.ScoreMapper">
+    <!--根据成绩表的id查找对应的成绩记录-->
+    <select id="findScoreById" resultType="com.science.entity.Score">
+        select * from t_score where score_id = #{id}
+    </select>
+
+    <!--新增成绩记录-->
+    <insert id="insertScore" useGeneratedKeys="true" keyProperty="scoreId">
+        insert into t_score(
+                            score_id, student_id, student_name, school, grade, classes, score, exam_name, exam_date
+        ) VALUES (
+                  #{scoreId},#{studentId},#{studentName},#{school},#{grade},#{classes},#{score},#{examName},#{examDate}
+                         )
+    </insert>
+
+    <!--使用文件上传的方式新增成绩-->
+    <insert id="saveScore">
+        INSERT INTO t_score (score_id, student_id, student_name, school, grade, classes, score, exam_name, exam_date)
+        VALUES (#{scoreId}, #{studentId}, #{studentName},#{school},#{grade},#{classes}, #{score}, #{examName}, #{examDate})
+    </insert>
+
+    <update id="modifyScore" parameterType="com.science.entity.Score">
+        UPDATE t_score SET
+                          score_id = #{scoreId},
+                          student_id = #{studentId},
+                          student_name = #{studentName},
+                          school = #{school},
+                          grade = #{grade},
+                          classes = #{classes},
+                          score = #{score},
+                          exam_name = #{examName},
+                          exam_date = #{examDate}
+        WHERE score_id = #{scoreId}
+    </update>
+
+    <select id="findScoreByInfo" resultType="com.science.entity.Score">
+        select * from t_score
+        where student_id = #{studentId}
+        <if test="score != null">and score = #{score}</if>
+        <if test="examName != null">and exam_name = #{examName}</if>
+        <if test="examDate != null">and exam_date = #{examDate}</if>
+        order by score desc
+    </select>
+
+    <select id="findScoreByTeacher" resultType="com.science.entity.Score">
+        select s.*
+        from t_score s
+        join t_teacher_class tc on s.school=tc.school and s.grade=tc.grade and s.classes=tc.classes
+        where tc.teacher_id = #{teacherId}
+        <if test="school != null">and s.school = #{school}</if>
+        <if test="grade != null">and s.grade = #{grade}</if>
+        <if test="classes != null">and s.classes = #{classes}</if>
+        <if test="examName != null">and s.exam_name = #{examName}</if>
+        order by score desc
+    </select>
+
+    <select id="findScoreByAdmin" resultType="com.science.entity.Score">
+        select *
+        from t_score
+        where 1=1
+        <if test="studentName != null">and student_name = #{studentName}</if>
+        <if test="school != null">and school = #{school}</if>
+        <if test="grade != null">and grade = #{grade}</if>
+        <if test="classes != null">and classes = #{classes}</if>
+        <if test="examName != null">and exam_name = #{examName}</if>
+        <if test="examDate != null">and exam_date = #{examDate}</if>
+        order by score desc
+    </select>
+    
+</mapper>

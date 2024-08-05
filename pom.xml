@@ -103,6 +103,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--下面两个是处理Excel等文件-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.2</version>
+        </dependency>
 
     </dependencies>
 
