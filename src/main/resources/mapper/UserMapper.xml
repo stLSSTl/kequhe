@@ -24,4 +24,7 @@
     <select id="findByUsername" resultMap="UserEntityMap">
             SELECT * FROM t_users WHERE username=#{username}
     </select>
+    <update id="updateAvatar">
+            UPDATE t_users SET avatar=#{avatar} WHERE uid=#{uid}
+    </update>
 </mapper>

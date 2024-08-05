@@ -13,7 +13,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private JWTUtil jwtUtil;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-                             Object handler) throws Exception {
+                             Object handler) {
         String token=request.getHeader("Authorization");
         String requestUsername = request.getHeader("X-Username"); // 从自定义请求头中获取用户名
         if(token==null|| token.isEmpty() || !token.startsWith("Bearer ")){
@@ -30,7 +30,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(requestUsername == null || !requestUsername.equals(tokenUsername)){
             return false;
         }
-
         return true;
     }
 }

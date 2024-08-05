@@ -5,6 +5,8 @@ import com.science.dto.UserRegDTO;
 import com.science.util.UserLoginResult;
 
 public interface IUserService {
-    public void reg(UserRegDTO userRegDTO);
+    public void reg(UserRegDTO userRegDTO,String avatar);
     public UserLoginResult login(UserLoginRequestDTO userLoginRequestDTO);
+    public void changeAvatar(int uid,String avatar);
+    public void deleteOldAvatar(String avatar);
 }

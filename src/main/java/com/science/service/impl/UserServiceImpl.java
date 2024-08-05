@@ -7,6 +7,7 @@ import com.science.entity.User;
 import com.science.mapper.UserMapper;
 import com.science.service.IUserService;
 import com.science.service.ex.*;
+import com.science.util.AliOssUtil;
 import com.science.util.JWTUtil;
 import com.science.util.UserLoginResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,10 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
     @Autowired
     private JWTUtil jwtUtil;
+    @Autowired
+    private AliOssUtil aliOssUtil;
     @Override
-    public void reg(UserRegDTO userRegDTO) {
+    public void reg(UserRegDTO userRegDTO,String avatar) {
         User result=userMapper.findByUsername(userRegDTO.getUsername());
         if(result!=null){
             throw new UsernameDuplicatedException("用户名重复的异常");
@@ -34,7 +37,7 @@ public class UserServiceImpl implements IUserService {
         User user=new User();
         user.setUsername(userRegDTO.getUsername());
         user.setUserType(userRegDTO.getUserType());
-        user.setAvatar(userRegDTO.getAvatar());
+        user.setAvatar(avatar);
         user.setSalt(salt);
         String MD5Password=getMD5Password(oldPassword,salt);
         user.setPassword(MD5Password);
@@ -87,4 +90,16 @@ public class UserServiceImpl implements IUserService {
         UserLoginResult userLoginResult=new UserLoginResult(userLoginResponseDTO,jwtToken);
         return userLoginResult;
     }
+    @Override
+    public void deleteOldAvatar(String avatar){
+        aliOssUtil.delete(avatar);
+    }
+    @Override
+    public void changeAvatar(int uid, String avatar) {
+        Integer rows=userMapper.updateAvatar(uid,avatar);
+        if(rows!=1){
+            throw new UpdateException("更新头像时发生未知异常");
+        }
+    }
+
 }

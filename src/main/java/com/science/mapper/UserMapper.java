@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
     public Integer insert(User user);
     public User findByUsername(String username);
+    public Integer updateAvatar(int uid,String avatar);
 }
