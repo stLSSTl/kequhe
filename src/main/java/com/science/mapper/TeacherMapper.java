@@ -8,12 +8,11 @@ import java.util.List;
 
 @Mapper
 public interface TeacherMapper {
-    public Integer findByUserId(int UserId);
+    public Integer findTeacherByUserId(int UserId);
     public Integer insert(Teacher teacher);
     public Integer addClassesForTeacher(TeacherClass teacherClass);
     public List<SchoolClassInfo> getClassInfoByTeacherId(int teacherId);
     public List<Student> getStudentInfoByClass(SchoolClassInfo schoolClassInfo);
-
 
 
 

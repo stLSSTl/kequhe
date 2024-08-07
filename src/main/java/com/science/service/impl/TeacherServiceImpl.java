@@ -28,7 +28,7 @@ public class TeacherServiceImpl implements ITeacherService {
     public void reg(TeacherRegDTO teacherRegDTO) {
         Teacher teacher=new Teacher();
         teacher.setUserId(teacherRegDTO.getUserId());
-        Integer rows=teacherMapper.findByUserId(teacher.getUserId());
+        Integer rows=teacherMapper.findTeacherByUserId(teacher.getUserId());
         if(rows!=null){
             throw new UserIdDuplicatedException("该用户已经完善学生信息");//所有角色检查是否完善信息公用的异常
         }
@@ -52,7 +52,6 @@ public class TeacherServiceImpl implements ITeacherService {
             throw new InsertException("插入时发生未知异常");
         }
     }
-
     @Override
     public List<Student> getAllStudentByTeacherId(int teacherId) {
         List<SchoolClassInfo> list=teacherMapper.getClassInfoByTeacherId(teacherId);
@@ -63,6 +62,18 @@ public class TeacherServiceImpl implements ITeacherService {
         }
         return allStudents;
     }
+
+    @Override
+    public List<SchoolClassInfo> getALLClassByTeacherId(int teacherId) {
+        List<SchoolClassInfo> classList=teacherMapper.getClassInfoByTeacherId(teacherId);
+        return classList;
+    }
+
+    @Override
+    public List<Student> getStudentByClassInfo(SchoolClassInfo schoolClassInfo) {
+        List<Student> list=teacherMapper.getStudentInfoByClass(schoolClassInfo);
+        return list;
+    }//从中可以提取出credit
 
     @Override
     public void addInteraction(ClassInteractionDTO classInteractionDTO) {

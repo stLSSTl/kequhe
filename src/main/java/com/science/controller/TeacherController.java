@@ -3,6 +3,7 @@ package com.science.controller;
 import com.science.dto.ClassInteractionDTO;
 import com.science.dto.TeacherClassDTO;
 import com.science.dto.TeacherRegDTO;
+import com.science.entity.SchoolClassInfo;
 import com.science.entity.Student;
 import com.science.service.IAliOssService;
 import com.science.service.ITeacherService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("teachers")
@@ -20,17 +22,35 @@ public class TeacherController extends BaseController{
     @PostMapping("reg")
     public JsonResult<Void> reg(@RequestBody TeacherRegDTO teacherRegDTO){
         teacherService.reg(teacherRegDTO);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
     }
     @PostMapping("addClasses")
     public JsonResult<Void> addClassesForTeacher(@RequestBody TeacherClassDTO teacherClassDTO){
         teacherService.addClassesForTeacher(teacherClassDTO);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
     }
     @GetMapping("getAllStudents")
     public JsonResult<List<Student>> getAllStudent(int teacherId){
         List<Student> allStudent=teacherService.getAllStudentByTeacherId(teacherId);
         return new JsonResult<>(OK,allStudent);
+    }
+    @GetMapping("getAllClasses")
+    public JsonResult<List<SchoolClassInfo>> getAllClasses(int teacherId){
+        List<SchoolClassInfo> allClass=teacherService.getALLClassByTeacherId(teacherId);
+        return new JsonResult<>(OK,allClass);
+    }
+    @PostMapping("getStudentByClassInfo")
+    public JsonResult<List<Student>> getStudentsByClassInfo(@RequestBody SchoolClassInfo schoolClassInfo){
+        List<Student> list=teacherService.getStudentByClassInfo(schoolClassInfo);
+        return new JsonResult<>(OK,list);
+    }
+    @PostMapping("randomStudent")
+    public JsonResult<Student> getRandomStudent(@RequestBody SchoolClassInfo schoolClassInfo){
+        List<Student> list=teacherService.getStudentByClassInfo(schoolClassInfo);
+        Random random=new Random();
+        int randomIndex=random.nextInt(list.size());
+        Student student=list.get(randomIndex);
+        return new JsonResult<>(OK,student);
     }
     /**
      * 添加课堂互动记录

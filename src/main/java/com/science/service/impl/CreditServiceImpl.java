@@ -14,15 +14,24 @@ import java.util.List;
 public class CreditServiceImpl implements ICreditService {
     @Autowired
     StudentMapper studentMapper;
-
+    @Override
+    public int addPoints(int studentId, int point) {
+        Integer oldPoint=studentMapper.getCreditByStudentId(studentId);
+        if(oldPoint==null){
+            throw new StudentNotFoundException("学号对应的学生积分不存在的异常");
+        }
+        int newPoint=oldPoint+point;
+        studentMapper.updateCredit(newPoint,studentId);
+        return newPoint;
+    }
     /**
      * 返回学生称号
-     * @param id
+     * @param
      * @return
      */
     @Override
-    public String getTitleByCredit(int id) {
-        Student student = studentMapper.findStudentById(id);
+    public String getTitleByCredit(int studentId) {
+        Student student = studentMapper.findStudentByStudentId(studentId);
         if(student == null) throw new StudentNotFoundException("该学生不存在");
 
         int credit = student.getCredit();
@@ -48,10 +57,12 @@ public class CreditServiceImpl implements ICreditService {
     }
 
     @Override
-    public Integer getCreditByUserId(int id) {
-        Student student = studentMapper.findStudentById(id);
-        if(student == null) throw new StudentNotFoundException("该学生不存在");
-        if(student.getCredit() == null) throw new CreditErrorException("积分不能为空");
-        return student.getCredit();
+    public Integer getCreditByUserId(int studentId) {
+        Student student =studentMapper.findStudentByStudentId(studentId);
+        if(student==null){
+            throw new StudentNotFoundException("未找到学号对应学生异常");
+        }
+        int credit=studentMapper.getCreditByStudentId(studentId);
+        return credit;
     }
 }

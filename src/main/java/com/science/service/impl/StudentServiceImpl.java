@@ -15,13 +15,13 @@ public class StudentServiceImpl implements IStudentService {
     StudentMapper studentMapper;
     @Override
     public void reg(StudentRegDTO studentRegDTO) {
-        Integer rows=studentMapper.findByUserId(studentRegDTO.getUserId());
-        if(rows!=null){
+        Student res=studentMapper.findStudentByUserId(studentRegDTO.getUserId());
+        if(res!=null){
             throw new UserIdDuplicatedException("该用户已经完善学生信息");
         }
         Student student=convertToEntity(studentRegDTO);
         student.setCredit(0);
-        rows=studentMapper.insert(student);
+        Integer rows=studentMapper.insert(student);
         if(rows!=1){
             throw new InsertException("插入学生时发生异常");
         }

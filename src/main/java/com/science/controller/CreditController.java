@@ -18,6 +18,12 @@ public class CreditController extends BaseController{
     @Autowired
     ICreditService creditService;
 
+    @PostMapping("addCredit")
+    public JsonResult<Integer> addCredit(int studentId,int point){
+        int newCredit=creditService.addPoints(studentId,point);
+        return new JsonResult<>(OK,newCredit);
+    }
+
     /**
      * 判断并返回学生的称号
      * 前端传回学生的userId，后端返回该学生的称号
@@ -46,7 +52,7 @@ public class CreditController extends BaseController{
         if(Objects.equals(grade, "")) grade = null;
         if(Objects.equals(classes, "")) classes = null;
         List<Student> students = creditService.getCreditByClass(school,grade,classes);
-        return new JsonResult<List<Student>>(OK,students);
+        return new JsonResult<>(OK,students);
     }
 
     /**
@@ -55,8 +61,8 @@ public class CreditController extends BaseController{
      * @return
      */
     @GetMapping("/{id}")
-    public JsonResult<Integer> getCreditRankingById(@PathVariable("id") int id){
+    public JsonResult<Integer> getCreditById(@PathVariable("id") int id){
         int credit = creditService.getCreditByUserId(id);
-        return new JsonResult<Integer>(OK,credit);
+        return new JsonResult<>(OK,credit);
     }
 }
