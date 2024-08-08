@@ -10,12 +10,25 @@
         <result column="user_id" property="userId"></result>
         <result column="student_name" property="studentName"></result>
     </resultMap>
-    <select id="findByUserId" resultType="java.lang.Integer">
+    <select id="findStudentByUserId" resultType="com.science.entity.Student">
             SELECT * FROM t_students WHERE user_id=#{userId}
     </select>
-    <select id="findStudentById" resultType="com.science.entity.Student">
-        SELECT * FROM t_students WHERE user_id=#{userId}
+    <select id="findStudentByStudentId" resultType="com.science.entity.Student">
+            SELECT * FROM t_students WHERE student_id=#{studentId}
     </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="studentId">
+        INSERT INTO t_students(
+            student_id,user_id,student_name,school,grade,classes,credit
+        )VALUES (
+                    #{studentId},#{userId},#{studentName},#{school},#{grade},#{classes},#{credit}
+                )
+    </insert>
+    <select id="getCreditByStudentId" resultType="java.lang.Integer">
+        SELECT credit FROM t_students WHERE student_id=#{studentId}
+    </select>
+    <update id="updateCredit">
+        UPDATE t_students SET credit=#{newCredit} WHERE student_id=#{studentId}
+    </update>
     <select id="findStudentsByClass" resultType="com.science.entity.Student">
         SELECT * FROM t_students
         where 1=1
@@ -24,11 +37,4 @@
         <if test="classes != null">and classes = #{classes}</if>
         order by credit desc
     </select>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="studentId">
-          INSERT INTO t_students(
-                                 student_id,user_id,student_name,school,grade,classes,credit
-          )VALUES (
-                   #{studentId},#{userId},#{studentName},#{school},#{grade},#{classes},#{credit}
-                            )
-    </insert>
 </mapper>

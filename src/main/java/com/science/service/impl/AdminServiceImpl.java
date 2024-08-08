@@ -27,7 +27,7 @@ public class AdminServiceImpl implements IAdminService {
         //将dto类的数据存到entity里面
         student.setUserId(studentRegDTO.getUserId());
         //判断是否该学生已经存在
-        Integer res = studentMapper.findByUserId(student.getUserId());
+        Student res = studentMapper.findStudentByUserId(student.getUserId());
         if(res != null){
             throw new StudentDuplicatedException("该学生已经存在");
         }
@@ -48,7 +48,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public void deleteStudent(int id) {
         //先判断该学生是否存在
-        Integer res = studentMapper.findByUserId(id);
+        Student res = studentMapper.findStudentByUserId(id);
         if (res == null){
             throw new StudentNotFoundException("该学生不存在");
         }
@@ -63,7 +63,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public void updateStudent(StudentUpdateDTO studentUpdateDTO) {
         //更新之前需要判断该学生是否存在
-        Integer res = studentMapper.findByUserId(studentUpdateDTO.getUserId());
+        Student res = studentMapper.findStudentByUserId(studentUpdateDTO.getUserId());
         if(res == null){
             throw new StudentNotFoundException("该学生不存在");
         }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace属性用于指定当前映射文件与哪个文件进行映射，因此需要标注接口的完整路径
+    即“com.cy.store.mapper.Teacher”-->
+<mapper namespace="com.science.mapper.ReplyMapper">
+    <select id="getRepliesByAnswerId" resultType="com.science.entity.Reply">
+        SELECT * FROM t_replies WHERE answer_id=#{answerId}
+    </select>
+    <insert id="insertReply">
+        INSERT INTO t_replies(
+            reply_id,content,answer_id,user_id,username,create_time
+        )VALUES (
+                 #{replyId},#{content},#{answerId},#{userId},#{username},#{createTime}
+                        )
+    </insert>
+    <delete id="deleteReply">
+        DELETE from t_replies WHERE reply_id=#{replyId}
+    </delete>
+</mapper>

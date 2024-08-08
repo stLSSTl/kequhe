@@ -9,11 +9,10 @@ import java.util.List;
 
 @Mapper
 public interface StudentMapper {
-    public Integer findByUserId(@Param("userId") int userId);
+    public Student findStudentByUserId(@Param("userId") int userId);
+    public Student findStudentByStudentId(int studentId);
     public Integer insert(Student student);
-
-    public Student findStudentById(@Param("userId") int userId);
-
-
+    public void updateCredit(int newCredit,int studentId);
+    public int getCreditByStudentId(int studentId);
     public List<Student> findStudentsByClass(@Param("school") String school, @Param("grade") String grade, @Param("classes") String classes);
 }

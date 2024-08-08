@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace属性用于指定当前映射文件与哪个文件进行映射，因此需要标注接口的完整路径
+    即“com.cy.store.mapper.Teacher”-->
+<mapper namespace="com.science.mapper.QuestionMapper">
+    <select id="getQuestionById" resultType="com.science.entity.Question">
+        SELECT * FROM  t_questions WHERE question_id=#{questionId}
+    </select>
+    <select id="getAllQuestions" resultType="com.science.entity.Question">
+        SELECT * FROM  t_questions
+    </select>
+    <insert id="insertQuestion" useGeneratedKeys="true" keyProperty="questionId">
+        INSERT INTO t_questions(
+            question_id,title,content,user_id,username,create_time
+        )VALUES (
+                 #{questionId},#{title},#{content},#{userId},#{username},#{createTime}
+                        )
+    </insert>
+    <delete id="deleteQuestion">
+        DELETE from t_questions WHERE question_id=#{questionId}
+    </delete>
+</mapper>

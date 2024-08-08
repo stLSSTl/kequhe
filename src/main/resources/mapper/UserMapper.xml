@@ -27,4 +27,7 @@
     <update id="updateAvatar">
             UPDATE t_users SET avatar=#{avatar} WHERE uid=#{uid}
     </update>
+    <select id="getUidByUsername" resultType="java.lang.Integer">
+        SELECT uid FROM t_users WHERE username=#{username}
+    </select>
 </mapper>
