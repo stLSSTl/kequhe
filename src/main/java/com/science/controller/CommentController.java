@@ -27,11 +27,26 @@ public class CommentController extends BaseController{
     @PostMapping("addAnswer")
     public JsonResult<Void> addAnswer(@RequestBody AnswerDTO answerDTO){
         commentService.addAnswer(answerDTO);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
+    }
+    @PostMapping("deleteAnswer")
+    public JsonResult<Void> deleteAnswer(int answerId){
+        commentService.deleteAnswer(answerId);
+        return new JsonResult<>(OK);
     }
     @PostMapping("addReply")
     public JsonResult<Void> addReply(@RequestBody ReplyDTO replyDTO){
         commentService.addReply(replyDTO);
         return new JsonResult<Void>(OK);
+    }
+    @PostMapping("deleteReply")
+    public JsonResult<Void> deleteReply(int replyId){
+        commentService.deleteReply(replyId);
+        return new JsonResult<>(OK);
+    }
+    @PostMapping("deleteQuestion")
+    public JsonResult<Void> deleteQuestion(int questionId){
+        commentService.deleteQuestion(questionId);
+        return new JsonResult<>(OK);
     }
 }

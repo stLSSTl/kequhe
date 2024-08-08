@@ -11,4 +11,7 @@ public interface ICommentService {
     public void addQuestion(QuestionDTO questionDTO);
     public void addAnswer(AnswerDTO answerDTO);
     public void addReply(ReplyDTO replyDTO);
+    public void deleteReply(int replyId);
+    public void deleteAnswer(int answerId);
+    public void deleteQuestion(int questionId);
 }

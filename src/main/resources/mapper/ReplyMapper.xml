@@ -15,4 +15,7 @@
                  #{replyId},#{content},#{answerId},#{userId},#{username},#{createTime}
                         )
     </insert>
+    <delete id="deleteReply">
+        DELETE from t_replies WHERE reply_id=#{replyId}
+    </delete>
 </mapper>

@@ -9,4 +9,5 @@ import java.util.List;
 public interface AnswerMapper {
     public List<Answer> getAnswersByQuestionId(int questionId);
     public Integer insertAnswer(Answer answer);
+    public void deleteAnswer(int answerId);
 }

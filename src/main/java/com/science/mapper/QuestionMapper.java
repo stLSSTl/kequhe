@@ -10,4 +10,5 @@ public interface QuestionMapper {
     public List<Question> getAllQuestions();
     public Question getQuestionById(int questionId);//暂时没用
     public Integer insertQuestion(Question question);
+    public void deleteQuestion(int questionId);
 }

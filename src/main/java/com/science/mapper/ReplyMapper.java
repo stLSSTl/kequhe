@@ -9,4 +9,5 @@ import java.util.List;
 public interface ReplyMapper {
     public List<Reply> getRepliesByAnswerId(int answerId);
     public Integer insertReply(Reply reply);
+    public void deleteReply(int replyId);
 }

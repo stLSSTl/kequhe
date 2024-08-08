@@ -11,6 +11,7 @@ import com.science.mapper.QuestionMapper;
 import com.science.mapper.ReplyMapper;
 import com.science.mapper.UserMapper;
 import com.science.service.ICommentService;
+import com.science.service.ex.DeleteException;
 import com.science.service.ex.InsertException;
 import com.science.service.ex.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,33 @@ public class CommentServiceImpl implements ICommentService {
         Integer rows=replyMapper.insertReply(reply);
         if(rows!=1){
             throw new InsertException("插入时异常");
+        }
+    }
+
+    @Override
+    public void deleteReply(int replyId) {
+        try{
+            replyMapper.deleteReply(replyId);
+        }catch (Exception e){
+            throw new DeleteException("删除时发生异常");
+        }
+    }
+
+    @Override
+    public void deleteAnswer(int answerId) {
+        try {
+            answerMapper.deleteAnswer(answerId);
+        }catch (Exception e){
+            throw new DeleteException("删除时发生异常");
+        }
+    }
+
+    @Override
+    public void deleteQuestion(int questionId) {
+        try {
+            questionMapper.deleteQuestion(questionId);
+        }catch (Exception e){
+            throw new DeleteException("删除时发生异常");
         }
     }
 
