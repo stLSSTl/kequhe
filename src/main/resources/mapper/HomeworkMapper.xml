@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.science.mapper.HomeworkMapper">
+    <!--根据作业编号查询作业-->
+    <select id="findByHomeworkId" resultType="com.science.entity.Homework">
+        select * from t_homework where homework_id = #{id}
+    </select>
+
+    <!--根据老师id查找该老师布置的所有作业-->
+    <select id="findByTeacherId" resultType="com.science.entity.Homework">
+        select * from t_homework where teacher_id = #{id}
+    </select>
+
+    <!--根据学生id查找该学生的所有作业-->
+    <select id="findByStudentId" resultType="com.science.entity.Homework">
+        select h.*
+        from t_homework h
+        join t_students s on h.school=s.school and h.grade=s.grade and h.classes=s.classes
+        where s.student_id=#{id}
+    </select>
+
+    <!--根据作业id查找学生提交记录-->
+    <select id="findSubmissionByHomeworkId" resultType="com.science.entity.StudentSubmission">
+        select * from t_student_submission where homework_id = #{id}
+    </select>
+
+    <!--根据提交id查找提交记录-->
+    <select id="findSubmissionBySubmissionId" resultType="com.science.entity.StudentSubmission">
+        select * from t_student_submission where submission_id = #{id}
+    </select>
+
+    <!--新增作业-->
+    <insert id="insertHomework" useGeneratedKeys="true" keyProperty="homeworkId">
+        insert into t_homework(
+                               homework_id, teacher_id, homework_name, content, picture, file, school, grade, classes, deadline
+        ) VALUES (
+                  #{homeworkId},#{teacherId},#{homeworkName},#{content},#{picture},#{file},#{school},#{grade},#{classes},#{deadline}
+                         )
+    </insert>
+
+    <!--根据作业编号删除作业-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from t_homework
+        where homework_id = #{id}
+    </delete>
+    
+    <!--批改作业-->
+    <update id="updateByTeacher" parameterType="com.science.dto.CorrectHomeworkDTO">
+        update t_student_submission set
+                                        status = 'corrected',
+                                        level = #{level},
+                                        feedback = #{feedback}
+        where submission_id = #{submissionId}
+    </update>
+
+    <!--根据作业id查找对应的学生-->
+    <select id="findStudentsByHomeworkId" resultType="com.science.entity.Student">
+        SELECT s.*
+        FROM t_students s
+                 JOIN t_homework h ON s.school = h.school AND s.grade = h.grade AND s.classes = h.classes
+        WHERE h.homework_id = #{homeworkId};
+    </select>
+
+
+    <!--新增提交记录-->
+    <insert id="insertSubmission" useGeneratedKeys="true" keyProperty="submissionId">
+        insert into t_student_submission(
+                                         submission_id, homework_id, student_id, student_name, submission_time, content, file, picture, sound, status, level, feedback
+        ) VALUES (
+                  #{submissionId},#{homeworkId},#{studentId},#{studentName},#{submissionTime},#{content},#{file},#{picture},#{sound},'uncorrected',null,null
+                         )
+    </insert>
+
+    <!--学生修改作业提交记录-->
+    <update id="updateSubmissionByStudent" parameterType="com.science.entity.StudentSubmission">
+        update t_student_submission set
+                                        submission_time = #{submissionTime},
+                                        content = #{content},
+                                        file = #{file},
+                                        picture = #{picture},
+                                        sound = #{sound}
+        where submission_id = #{submissionId}
+
+    </update>
+
+</mapper>

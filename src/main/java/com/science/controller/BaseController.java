@@ -79,6 +79,18 @@ public class BaseController {
         } else if (e instanceof ScoreIdDuplicatedException) {
             jsonResult.setState(4018);
             jsonResult.setMessage("该成绩记录已存在的异常");
+        } else if (e instanceof HomeworkIdDuplicatedException) {
+            jsonResult.setState(4019);
+            jsonResult.setMessage("该作业已经存在的异常");
+        } else if (e instanceof HomeworkNotFoundException) {
+            jsonResult.setState(4020);
+            jsonResult.setMessage("该作业不存在的异常");
+        } else if (e instanceof StudentSubmissionNotFoundException) {
+            jsonResult.setState(4021);
+            jsonResult.setMessage("提交记录不存在的异常");
+        } else if (e instanceof StudentSubmissionIdDuplicatedException) {
+            jsonResult.setState(4022);
+            jsonResult.setMessage("提交记录已经存在的异常");
         } else if (e instanceof AIPainterException) {
             jsonResult.setState(5005);//宽泛异常暂时用5xxx跟具体异常4xxx区分
             jsonResult.setMessage("AI绘图发生未知异常");
