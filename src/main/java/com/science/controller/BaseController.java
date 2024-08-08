@@ -79,6 +79,9 @@ public class BaseController {
         } else if (e instanceof AIAnswerServiceException) {
             jsonResult.setState(5007);
             jsonResult.setMessage("AI回复发生未知异常");
+        } else if (e instanceof UserNotFoundException) {
+            jsonResult.setState(4016);
+            jsonResult.setMessage("用户不存在异常");
         }
         return jsonResult;
     }
