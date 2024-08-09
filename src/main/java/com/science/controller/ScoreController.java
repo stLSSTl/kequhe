@@ -4,6 +4,7 @@ import com.science.dto.ScoreDTO;
 import com.science.entity.Score;
 import com.science.service.IScoreService;
 import com.science.util.JsonResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,10 +69,9 @@ public class ScoreController extends BaseController{
      */
     @GetMapping("studentQuery/{id}")
     public JsonResult<List<Score>> studentQuery(@PathVariable("id") int id,
-                                         @RequestParam("score") String score,
+                                         @RequestParam(value = "score",required=false) Integer score,
                                          @RequestParam("examName") String examName,
                                          @RequestParam("examDate") String examDate){
-        if(Objects.equals(score,"")) score = null;
         if(Objects.equals(examName, "")) examName = null;
         if(Objects.equals(examDate, "")) examDate = null;
         List<Score> scores = iScoreService.studentQuery(id,score,examName,examDate);
