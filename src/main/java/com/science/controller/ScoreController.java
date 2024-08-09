@@ -76,7 +76,6 @@ public class ScoreController extends BaseController{
         if(Objects.equals(examDate, "")) examDate = null;
         List<Score> scores = iScoreService.studentQuery(id,score,examName,examDate);
         return new JsonResult<List<Score>>(OK,scores);
-
     }
 
     /**
