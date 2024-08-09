@@ -19,33 +19,33 @@ public class CommentController extends BaseController{
         List<QuestionDTO> questionDTOList=commentService.getAllComments();
         return new JsonResult<>(OK,questionDTOList);
     };
-    @PostMapping("addQuestion")
+    @PostMapping("Questions")
     public JsonResult<Void> addQuestion(@RequestBody QuestionDTO questionDTO){
         commentService.addQuestion(questionDTO);
         return new JsonResult<>(OK);
     }
-    @PostMapping("addAnswer")
+    @PostMapping("Answers")
     public JsonResult<Void> addAnswer(@RequestBody AnswerDTO answerDTO){
         commentService.addAnswer(answerDTO);
         return new JsonResult<>(OK);
     }
-    @PostMapping("deleteAnswer")
-    public JsonResult<Void> deleteAnswer(int answerId){
+    @DeleteMapping("Answers/{answerId}")
+    public JsonResult<Void> deleteAnswer(@PathVariable int answerId){
         commentService.deleteAnswer(answerId);
         return new JsonResult<>(OK);
     }
-    @PostMapping("addReply")
+    @PostMapping("Replies")
     public JsonResult<Void> addReply(@RequestBody ReplyDTO replyDTO){
         commentService.addReply(replyDTO);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
     }
-    @PostMapping("deleteReply")
-    public JsonResult<Void> deleteReply(int replyId){
+    @DeleteMapping("Replies/{replyId}")
+    public JsonResult<Void> deleteReply(@PathVariable int replyId){
         commentService.deleteReply(replyId);
         return new JsonResult<>(OK);
     }
-    @PostMapping("deleteQuestion")
-    public JsonResult<Void> deleteQuestion(int questionId){
+    @DeleteMapping("Questions/{questionId}")
+    public JsonResult<Void> deleteQuestion(@PathVariable int questionId){
         commentService.deleteQuestion(questionId);
         return new JsonResult<>(OK);
     }

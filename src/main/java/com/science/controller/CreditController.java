@@ -18,8 +18,8 @@ public class CreditController extends BaseController{
     @Autowired
     ICreditService creditService;
 
-    @PostMapping("addCredit")
-    public JsonResult<Integer> addCredit(int studentId,int point){
+    @PostMapping("/{studentId}")
+    public JsonResult<Integer> addCredit(@PathVariable int studentId,@RequestParam int point){
         int newCredit=creditService.addPoints(studentId,point);
         return new JsonResult<>(OK,newCredit);
     }
@@ -27,13 +27,13 @@ public class CreditController extends BaseController{
     /**
      * 判断并返回学生的称号
      * 前端传回学生的userId，后端返回该学生的称号
-     * @param id
+     * @param studentId
      * @return
      */
-    @GetMapping("studentTitle/{id}")
-    public JsonResult<String> getStudentTitle(@PathVariable("id") int id){
-        String title = creditService.getTitleByCredit(id);
-        return new JsonResult<String>(OK,title);
+    @GetMapping("studentTitle/{studentId}")
+    public JsonResult<String> getStudentTitle(@PathVariable("studentId") int studentId){
+        String title = creditService.getTitleByCredit(studentId);
+        return new JsonResult<>(OK,title);
     }
 
 
@@ -57,12 +57,12 @@ public class CreditController extends BaseController{
 
     /**
      * 根据userId传回具体学生的积分
-     * @param id
+     * @param studentId
      * @return
      */
-    @GetMapping("/{id}")
-    public JsonResult<Integer> getCreditById(@PathVariable("id") int id){
-        int credit = creditService.getCreditByUserId(id);
+    @GetMapping("/{studentId}")
+    public JsonResult<Integer> getCreditById(@PathVariable("studentId") int studentId){
+        int credit = creditService.getCreditByUserId(studentId);
         return new JsonResult<>(OK,credit);
     }
 }

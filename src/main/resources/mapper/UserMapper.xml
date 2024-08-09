@@ -24,6 +24,9 @@
     <select id="findByUsername" resultMap="UserEntityMap">
             SELECT * FROM t_users WHERE username=#{username}
     </select>
+    <select id="getAvatarByUid" resultType="java.lang.String">
+        SELECT avatar FROM t_users WHERE uid=#{uid}
+    </select>
     <update id="updateAvatar">
             UPDATE t_users SET avatar=#{avatar} WHERE uid=#{uid}
     </update>

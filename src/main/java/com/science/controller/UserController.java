@@ -22,6 +22,7 @@ public class UserController extends BaseController {
     private IUserService userService;
     @Autowired
     private IAliOssService aliOssService;
+    /*
     @PostMapping("reg")
     @ApiOperation("注册功能测试")
     public JsonResult<Void> reg(@RequestParam String userRegDTOJson,
@@ -34,18 +35,35 @@ public class UserController extends BaseController {
         userService.reg(userRegDTO,avatarPath);
         return new JsonResult<Void>(OK);
     }
+     */
+    @PostMapping("reg")
+    @ApiOperation("注册功能测试")
+    public JsonResult<Void> reg(@RequestParam String username,
+                                @RequestParam String password,
+                                @RequestParam String userType,
+                                @RequestParam MultipartFile avatarFile) throws JsonProcessingException {
+        UserRegDTO userRegDTO=new UserRegDTO();
+        userRegDTO.setUsername(username);
+        userRegDTO.setPassword(password);
+        userRegDTO.setUserType(userType);
+        String mineType=avatarFile.getContentType();
+        String avatarPath=aliOssService.uploadFile(avatarFile,mineType);
+        userService.reg(userRegDTO,avatarPath);
+        return new JsonResult<>(OK);
+    }
     @PostMapping("login")
     @ApiOperation("登录功能测试")
     public JsonResult<UserLoginResult> login(@RequestBody UserLoginRequestDTO userLoginRequestDTO) {
         UserLoginResult userLoginResult = userService.login(userLoginRequestDTO);
         return new JsonResult<>(OK, userLoginResult);
     }
-    @PostMapping("changeAvatar")
-    public JsonResult<Void> changeAvatar(int uid,String oldAvatar,MultipartFile avatarFile){
+    @PutMapping("avatar/{uid}")
+    public JsonResult<Void> changeAvatar(@PathVariable int uid,MultipartFile avatarFile){
+        String oldAvatar=userService.getAvatar(uid);
         userService.deleteOldAvatar(oldAvatar);
         String mineType=avatarFile.getContentType();
         String avatarPath=aliOssService.uploadFile(avatarFile,mineType);
         userService.changeAvatar(uid,avatarPath);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
     }
 }

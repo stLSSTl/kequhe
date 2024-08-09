@@ -90,6 +90,13 @@ public class UserServiceImpl implements IUserService {
         UserLoginResult userLoginResult=new UserLoginResult(userLoginResponseDTO,jwtToken);
         return userLoginResult;
     }
+
+    @Override
+    public String getAvatar(int uid) {
+        String avatar=userMapper.getAvatarByUid(uid);
+        return avatar;
+    }
+
     @Override
     public void deleteOldAvatar(String avatar){
         aliOssUtil.delete(avatar);
