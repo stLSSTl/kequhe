@@ -56,13 +56,13 @@ public class CreditController extends BaseController{
     }
 
     /**
-     * 根据userId传回具体学生的积分
+     * 根据studentId传回具体学生的积分
      * @param studentId
      * @return
      */
     @GetMapping("/{studentId}")
     public JsonResult<Integer> getCreditById(@PathVariable("studentId") int studentId){
-        int credit = creditService.getCreditByUserId(studentId);
+        int credit = creditService.getCreditByStudentId(studentId);
         return new JsonResult<>(OK,credit);
     }
 }

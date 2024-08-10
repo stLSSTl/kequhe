@@ -39,24 +39,24 @@ public class HomeworkController extends BaseController{
 
     /**
      * 老师根据作业id删除作业
-     * @param id
+     * @param homeworkId
      * @return
      */
-    @DeleteMapping("delete/{id}")
-    public JsonResult<Void> deleteHomework(@PathVariable("id") int id){
-        iHomeworkService.deleteHomework(id);
+    @DeleteMapping("delete/{homeworkId}")
+    public JsonResult<Void> deleteHomework(@PathVariable("homeworkId") int homeworkId){
+        iHomeworkService.deleteHomework(homeworkId);
         return new JsonResult<Void>(OK);
     }
 
     /**
      * 根据老师id，查看该老师布置的所有作业
      * 例如，老师点开“我的作业”页面，会显示自己布置的作业
-     * @param id
+     * @param teacherId
      * @return
      */
-    @GetMapping("teacherCheckAll/{id}")
-    public JsonResult<List<Homework>> teacherCheckAll(@PathVariable("id") int id){
-        List<Homework> homeworks = iHomeworkService.teacherCheckAll(id);
+    @GetMapping("teacherCheckAll/{teacherId}")
+    public JsonResult<List<Homework>> teacherCheckAll(@PathVariable("teacherId") int teacherId){
+        List<Homework> homeworks = iHomeworkService.teacherCheckAll(teacherId);
         return new JsonResult<List<Homework>>(OK,homeworks);
     }
 
@@ -66,12 +66,12 @@ public class HomeworkController extends BaseController{
      * 返回前端的是学生的提交信息
      * 老师在“我的作业”页面选择任一自己布置的作业，点击查看完成情况
      * 因此就不需要teacherId了，因为在“我的页面”里面显示的都是该老师布置的作业
-     * @param id
+     * @param homeworkId
      * @return
      */
-    @GetMapping("teacherCheckOne/{id}")
-    public JsonResult<List<StudentSubmission>> teacherCheckOne(@PathVariable("id") int id){
-        List<StudentSubmission> studentSubmissions = iHomeworkService.teacherCheckOne(id);
+    @GetMapping("teacherCheckOne/{homeworkId}")
+    public JsonResult<List<StudentSubmission>> teacherCheckOne(@PathVariable("homeworkId") int homeworkId){
+        List<StudentSubmission> studentSubmissions = iHomeworkService.teacherCheckOne(homeworkId);
         return new JsonResult<List<StudentSubmission>>(OK,studentSubmissions);
     }
 

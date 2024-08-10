@@ -57,7 +57,7 @@ public class CreditServiceImpl implements ICreditService {
     }
 
     @Override
-    public Integer getCreditByUserId(int studentId) {
+    public Integer getCreditByStudentId(int studentId) {
         Student student =studentMapper.findStudentByStudentId(studentId);
         if(student==null){
             throw new StudentNotFoundException("未找到学号对应学生异常");

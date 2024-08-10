@@ -33,12 +33,12 @@ public class AdminController extends BaseController {
     /**
      * 管理员根据学生id删除学生信息
      * 前端传回的id是学生的userId
-     * @param id
+     * @param userId
      * @return
      */
-    @DeleteMapping("deleteStudent/{id}")
-    public JsonResult<Void> deleteStudent(@PathVariable("id") int id){
-        adminService.deleteStudent(id);
+    @DeleteMapping("deleteStudent/{userId}")
+    public JsonResult<Void> deleteStudent(@PathVariable("userId") int userId){
+        adminService.deleteStudent(userId);
         return new JsonResult<Void>(OK);
     }
 
@@ -65,12 +65,12 @@ public class AdminController extends BaseController {
 
     /**
      * 管理员根据老师姓名删除老师
-     * @param id
+     * @param userId
      * @return
      */
-    @DeleteMapping("deleteTeacher/{id}")
-    public JsonResult<Void> deleteTeacher(@PathVariable("id") int id){
-        adminService.deleteTeacher(id);
+    @DeleteMapping("deleteTeacher/{userId}")
+    public JsonResult<Void> deleteTeacher(@PathVariable("userId") int userId){
+        adminService.deleteTeacher(userId);
         return new JsonResult<Void>(OK);
     }
 
@@ -98,12 +98,12 @@ public class AdminController extends BaseController {
 
     /**
      * 管理员根据家长id删除家长
-     * @param id
+     * @param userId
      * @return
      */
-    @DeleteMapping("deleteParent/{id}")
-    public JsonResult<Void> deleteParent(@PathVariable("id") int id){
-        adminService.deleteParent(id);
+    @DeleteMapping("deleteParent/{userId}")
+    public JsonResult<Void> deleteParent(@PathVariable("userId") int userId){
+        adminService.deleteParent(userId);
         return new JsonResult<Void>(OK);
     }
 

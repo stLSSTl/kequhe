@@ -61,34 +61,34 @@ public class ScoreController extends BaseController{
     /**
      * 学生查询自己的成绩，可以筛选成绩、考试名称、考试日期
      * 前端传回学生学号studentId
-     * @param id
+     * @param studentId
      * @param score
      * @param examName
      * @param examDate
      * @return
      */
-    @GetMapping("studentQuery/{id}")
-    public JsonResult<List<Score>> studentQuery(@PathVariable("id") int id,
+    @GetMapping("studentQuery/{studentId}")
+    public JsonResult<List<Score>> studentQuery(@PathVariable("studentId") int studentId,
                                          @RequestParam(value = "score",required=false) Integer score,
                                          @RequestParam("examName") String examName,
                                          @RequestParam("examDate") String examDate){
         if(Objects.equals(examName, "")) examName = null;
         if(Objects.equals(examDate, "")) examDate = null;
-        List<Score> scores = iScoreService.studentQuery(id,score,examName,examDate);
+        List<Score> scores = iScoreService.studentQuery(studentId,score,examName,examDate);
         return new JsonResult<List<Score>>(OK,scores);
     }
 
     /**
      * 老师查询自己班级学生的成绩情况
      * 可以筛选学校、年级、班级、考试名称字段
-     * @param id
+     * @param teacherId
      * @param grade
      * @param classes
      * @param examName
      * @return
      */
-    @GetMapping("teacherQuery/{id}")
-    public JsonResult<List<Score>> teacherQuery(@PathVariable("id") int id,
+    @GetMapping("teacherQuery/{teacherId}")
+    public JsonResult<List<Score>> teacherQuery(@PathVariable("teacherId") int teacherId,
                                                 @RequestParam("school") String school,
                                                 @RequestParam("grade") String grade,
                                                 @RequestParam("classes") String classes,
@@ -97,7 +97,7 @@ public class ScoreController extends BaseController{
         if(Objects.equals(grade,"")) grade = null;
         if(Objects.equals(classes, "")) classes = null;
         if(Objects.equals(examName, "")) examName = null;
-        List<Score> scores = iScoreService.teacherQuery(id,school,grade,classes,examName);
+        List<Score> scores = iScoreService.teacherQuery(teacherId,school,grade,classes,examName);
         return new JsonResult<List<Score>>(OK,scores);
     }
 
