@@ -101,7 +101,7 @@ public class ScoreServiceImpl implements IScoreService {
     }
 
     @Override
-    public List<Score> studentQuery(int studentId,String score, String examName, String examDate) {
+    public List<Score> studentQuery(int studentId,Integer score, String examName, String examDate) {
         List<Score> scores = scoreMapper.findScoreByInfo(studentId,score,examName,examDate);
         if (scores.isEmpty()) throw new ScoreRecordNotFoundException("成绩记录表为空");
         return scores;

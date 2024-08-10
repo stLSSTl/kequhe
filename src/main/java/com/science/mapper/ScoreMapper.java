@@ -18,7 +18,7 @@ public interface ScoreMapper {
 
     public Integer modifyScore(Score score);
 
-    public List<Score> findScoreByInfo(int studentId,String score, String examName, String examDate);
+    public List<Score> findScoreByInfo(int studentId,Integer score, String examName, String examDate);
 
     public List<Score> findScoreByTeacher(int teacherId,String school,String grade,String classes,String examName);
 
