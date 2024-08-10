@@ -1,13 +1,14 @@
 package com.science.controller;
 
 import com.science.controller.ex.AIPainterException;
+import com.science.controller.ex.GetRandomStudentException;
 import com.science.service.ex.*;
 import com.science.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 public class BaseController {
     public static final int OK=200;
-    @ExceptionHandler({ServiceException.class,AIPainterException.class})
+    @ExceptionHandler({ServiceException.class,AIPainterException.class, GetRandomStudentException.class})
     public JsonResult<Void> handleException(Throwable e){
         JsonResult<Void> jsonResult=new JsonResult<Void>(e);
         if(e instanceof InsertException){
@@ -101,8 +102,11 @@ public class BaseController {
             jsonResult.setState(5007);
             jsonResult.setMessage("AI回复发生未知异常");
         } else if (e instanceof UserNotFoundException) {
-            jsonResult.setState(4016);
+            jsonResult.setState(4017);
             jsonResult.setMessage("用户不存在异常");
+        } else if (e instanceof GetRandomStudentException) {
+            jsonResult.setState(4018);
+            jsonResult.setMessage("获取学生表单异常");
         }
         return jsonResult;
     }

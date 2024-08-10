@@ -46,7 +46,7 @@ public class TeacherServiceImpl implements ITeacherService {
         teacherClass.setSchool(teacherClassDTO.getSchool());
         teacherClass.setGrade(teacherClassDTO.getGrade());
         teacherClass.setClasses(teacherClassDTO.getClasses());
-        teacherClass.setSubject(teacherClassDTO.getSubject());
+        teacherClass.setSubject("science");
         Integer rows=teacherMapper.addClassesForTeacher(teacherClass);
         if(rows!=1){
             throw new InsertException("插入时发生未知异常");

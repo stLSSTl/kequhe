@@ -1,5 +1,6 @@
 package com.science.controller;
 
+import com.science.controller.ex.GetRandomStudentException;
 import com.science.dto.ClassInteractionDTO;
 import com.science.dto.TeacherClassDTO;
 import com.science.dto.TeacherRegDTO;
@@ -24,29 +25,33 @@ public class TeacherController extends BaseController{
         teacherService.reg(teacherRegDTO);
         return new JsonResult<>(OK);
     }
-    @PostMapping("addClasses")
-    public JsonResult<Void> addClassesForTeacher(@RequestBody TeacherClassDTO teacherClassDTO){
+    @PostMapping("classes/{teacherId}")
+    public JsonResult<Void> addClassesForTeacher(@PathVariable int teacherId,@RequestBody TeacherClassDTO teacherClassDTO){
+        teacherClassDTO.setTeacherId(teacherId);
         teacherService.addClassesForTeacher(teacherClassDTO);
         return new JsonResult<>(OK);
     }
-    @GetMapping("getAllStudents")
-    public JsonResult<List<Student>> getAllStudent(int teacherId){
+    @GetMapping("students/{teacherId}")
+    public JsonResult<List<Student>> getAllStudent(@PathVariable int teacherId){
         List<Student> allStudent=teacherService.getAllStudentByTeacherId(teacherId);
         return new JsonResult<>(OK,allStudent);
     }
-    @GetMapping("getAllClasses")
-    public JsonResult<List<SchoolClassInfo>> getAllClasses(int teacherId){
+    @GetMapping("classes/{teacherId}")
+    public JsonResult<List<SchoolClassInfo>> getAllClasses(@PathVariable int teacherId){
         List<SchoolClassInfo> allClass=teacherService.getALLClassByTeacherId(teacherId);
         return new JsonResult<>(OK,allClass);
     }
-    @PostMapping("getStudentByClassInfo")
+    @PostMapping("student/ByClassInfo")
     public JsonResult<List<Student>> getStudentsByClassInfo(@RequestBody SchoolClassInfo schoolClassInfo){
         List<Student> list=teacherService.getStudentByClassInfo(schoolClassInfo);
         return new JsonResult<>(OK,list);
     }
-    @PostMapping("randomStudent")
+    @PostMapping("student/random")
     public JsonResult<Student> getRandomStudent(@RequestBody SchoolClassInfo schoolClassInfo){
         List<Student> list=teacherService.getStudentByClassInfo(schoolClassInfo);
+        if(list==null||list.isEmpty()){
+            throw new GetRandomStudentException("获取学生表单异常");
+        }
         Random random=new Random();
         int randomIndex=random.nextInt(list.size());
         Student student=list.get(randomIndex);

@@ -8,12 +8,10 @@ import com.science.service.IAliOssService;
 import com.science.service.ICourseVideoService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,6 +21,7 @@ public class VideoController extends BaseController{
     private IAliOssService aliOssService;
     @Autowired
     private ICourseVideoService courseVideoService;
+    /*
     @PostMapping("addVideo")
     public JsonResult<CourseVideo> addVideo(
                                      @RequestParam String courseVideoDTOJson,
@@ -40,15 +39,41 @@ public class VideoController extends BaseController{
         courseVideoService.insertVideo(courseVideo);
         return new JsonResult<>(OK,courseVideo);
     }
-    @PostMapping("deleteVideo")
-    public JsonResult<Void> deleteVideo(int videoId){
+     */
+
+    @PostMapping("addVideo")
+    public JsonResult<CourseVideo> addVideo(
+            @RequestParam String videoName,
+            @RequestParam Integer status,
+            @RequestParam String createUser,
+            @RequestParam String introduction,
+            @RequestParam MultipartFile videoFile,
+            @RequestParam MultipartFile coverImage) {
+        String mimeType=videoFile.getContentType();
+        String filePath=aliOssService.uploadFile(videoFile,mimeType);
+        mimeType=coverImage.getContentType();
+        String coverPath=aliOssService.uploadFile(coverImage,mimeType);
+        CourseVideo courseVideo=new CourseVideo();
+        courseVideo.setVideoName(videoName);
+        courseVideo.setStatus(status);
+        courseVideo.setCreateUser(createUser);
+        courseVideo.setIntroduction(introduction);
+        courseVideo.setCreateTime(new Date());
+        courseVideo.setVideoUrl(filePath);
+        courseVideo.setCoverUrl(coverPath);
+        courseVideoService.insertVideo(courseVideo);
+        return new JsonResult<>(OK,courseVideo);
+    }
+
+    @DeleteMapping("/{videoId}")
+    public JsonResult<Void> deleteVideo(@PathVariable int videoId){
         CourseVideo courseVideo=courseVideoService.findVideoById(videoId);
         aliOssService.deleteFile(courseVideo.getVideoUrl());
         aliOssService.deleteFile(courseVideo.getCoverUrl());
         courseVideoService.deleteVideo(videoId);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
     }
-    @PostMapping("showVideos")
+    @GetMapping("showVideos")
     public JsonResult<List<CourseVideo>> getVideoByCreateUserName(String createUser){
         List<CourseVideo> list=courseVideoService.getVideosByCreateUser(createUser);
         return new JsonResult<>(OK,list);
