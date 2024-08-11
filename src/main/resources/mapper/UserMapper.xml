@@ -33,4 +33,12 @@
     <select id="getUidByUsername" resultType="java.lang.Integer">
         SELECT uid FROM t_users WHERE username=#{username}
     </select>
+
+    <insert id="insertFeedback" useGeneratedKeys="true" keyProperty="feedbackId">
+        insert into t_feedback(
+                               feedback_id, user_id, user_type, content, time
+        ) VALUES (
+                  #{feedbackId},#{userId},#{userType},#{content},#{time}
+                         )
+    </insert>
 </mapper>

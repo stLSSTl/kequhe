@@ -1,5 +1,6 @@
 package com.science.service;
 
+import com.science.dto.FeedbackDTO;
 import com.science.dto.UserLoginRequestDTO;
 import com.science.dto.UserRegDTO;
 import com.science.util.UserLoginResult;
@@ -10,4 +11,5 @@ public interface IUserService {
     public String getAvatar(int uid);
     public void changeAvatar(int uid,String avatar);
     public void deleteOldAvatar(String avatar);
+    public void submitFeedback(FeedbackDTO feedbackDTO);
 }

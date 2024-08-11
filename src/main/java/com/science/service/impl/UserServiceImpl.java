@@ -1,8 +1,10 @@
 package com.science.service.impl;
 
+import com.science.dto.FeedbackDTO;
 import com.science.dto.UserLoginRequestDTO;
 import com.science.dto.UserLoginResponseDTO;
 import com.science.dto.UserRegDTO;
+import com.science.entity.Feedback;
 import com.science.entity.User;
 import com.science.mapper.UserMapper;
 import com.science.service.IUserService;
@@ -10,6 +12,7 @@ import com.science.service.ex.*;
 import com.science.util.AliOssUtil;
 import com.science.util.JWTUtil;
 import com.science.util.UserLoginResult;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -101,12 +104,22 @@ public class UserServiceImpl implements IUserService {
     public void deleteOldAvatar(String avatar){
         aliOssUtil.delete(avatar);
     }
+
     @Override
     public void changeAvatar(int uid, String avatar) {
         Integer rows=userMapper.updateAvatar(uid,avatar);
         if(rows!=1){
             throw new UpdateException("更新头像时发生未知异常");
         }
+    }
+
+    @Override
+    public void submitFeedback(FeedbackDTO feedbackDTO) {
+        Feedback feedback = new Feedback();
+        BeanUtils.copyProperties(feedbackDTO,feedback);
+        feedback.setTime(new Date());
+        Integer rows = userMapper.insertFeedback(feedback);
+        if(rows != 1)   throw new InsertException("插入数据时发送未知错误");
     }
 
 }

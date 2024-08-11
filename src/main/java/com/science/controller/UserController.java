@@ -2,6 +2,7 @@ package com.science.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.science.dto.FeedbackDTO;
 import com.science.dto.UserLoginRequestDTO;
 import com.science.dto.UserRegDTO;
 import com.science.service.IAliOssService;
@@ -65,5 +66,16 @@ public class UserController extends BaseController {
         String avatarPath=aliOssService.uploadFile(avatarFile,mineType);
         userService.changeAvatar(uid,avatarPath);
         return new JsonResult<>(OK);
+    }
+
+    /**
+     * 用户反馈
+     * @param feedbackDTO
+     * @return
+     */
+    @PostMapping("feedback")
+    public JsonResult<Void> submitFeedback(@RequestBody FeedbackDTO feedbackDTO){
+        userService.submitFeedback(feedbackDTO);
+        return new JsonResult<Void>(OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.science.mapper;
 
+import com.science.entity.Feedback;
 import com.science.entity.User;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,4 +12,5 @@ public interface UserMapper {
     public String getAvatarByUid(int uid);
     public Integer updateAvatar(int uid,String avatar);
     public Integer getUidByUsername(String username);
+    public Integer insertFeedback(Feedback feedback);
 }
