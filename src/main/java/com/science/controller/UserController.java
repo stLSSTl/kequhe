@@ -22,30 +22,18 @@ public class UserController extends BaseController {
     private IUserService userService;
     @Autowired
     private IAliOssService aliOssService;
-    /*
-    @PostMapping("reg")
-    @ApiOperation("注册功能测试")
-    public JsonResult<Void> reg(@RequestParam String userRegDTOJson,
-                                @RequestPart MultipartFile avatarFile) throws JsonProcessingException {
-        ObjectMapper objectMapper=new ObjectMapper();
-        UserRegDTO userRegDTO=objectMapper.readValue(userRegDTOJson,UserRegDTO.class);
-        String mineType=avatarFile.getContentType();
-        String avatarPath=aliOssService.uploadFile(avatarFile,mineType);
-        //这里如果不加@RequestBody注解就不能通过json数据传进哪里
-        userService.reg(userRegDTO,avatarPath);
-        return new JsonResult<Void>(OK);
-    }
-     */
     @PostMapping("reg")
     @ApiOperation("注册功能测试")
     public JsonResult<Void> reg(@RequestParam String username,
                                 @RequestParam String password,
                                 @RequestParam String userType,
-                                @RequestParam MultipartFile avatarFile) throws JsonProcessingException {
+                                @RequestParam MultipartFile avatarFile,
+                                @RequestParam String gender) throws JsonProcessingException {
         UserRegDTO userRegDTO=new UserRegDTO();
         userRegDTO.setUsername(username);
         userRegDTO.setPassword(password);
         userRegDTO.setUserType(userType);
+        userRegDTO.setGender(gender);
         String mineType=avatarFile.getContentType();
         String avatarPath=aliOssService.uploadFile(avatarFile,mineType);
         userService.reg(userRegDTO,avatarPath);

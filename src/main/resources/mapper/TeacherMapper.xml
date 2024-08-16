@@ -10,7 +10,7 @@
         <result column="grade" property="grade"></result>
         <result column="classes" property="classes"></result>
     </resultMap>
-    <select id="findTeacherByUserId" resultType="java.lang.Integer">
+    <select id="findTeacherByUserId" resultType="com.science.entity.Teacher">
         SELECT * FROM t_teachers WHERE user_id=#{userId}
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="teacherId">

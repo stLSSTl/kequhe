@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface TeacherMapper {
-    public Integer findTeacherByUserId(int UserId);
+    public Teacher findTeacherByUserId(int UserId);
     public Integer insert(Teacher teacher);
     public Integer addClassesForTeacher(TeacherClass teacherClass);
     public List<SchoolClassInfo> getClassInfoByTeacherId(int teacherId);

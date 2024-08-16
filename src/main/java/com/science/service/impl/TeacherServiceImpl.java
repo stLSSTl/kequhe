@@ -28,8 +28,8 @@ public class TeacherServiceImpl implements ITeacherService {
     public void reg(TeacherRegDTO teacherRegDTO) {
         Teacher teacher=new Teacher();
         teacher.setUserId(teacherRegDTO.getUserId());
-        Integer rows=teacherMapper.findTeacherByUserId(teacher.getUserId());
-        if(rows!=null){
+        Teacher res=teacherMapper.findTeacherByUserId(teacher.getUserId());
+        if(res!=null){
             throw new UserIdDuplicatedException("该用户已经完善学生信息");//所有角色检查是否完善信息公用的异常
         }
         teacher.setTeacherName(teacherRegDTO.getTeacherName());

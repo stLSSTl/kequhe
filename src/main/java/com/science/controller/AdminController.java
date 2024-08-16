@@ -97,7 +97,7 @@ public class AdminController extends BaseController {
     }
 
     /**
-     * 管理员根据家长id删除家长
+     * 管理员根据家长id删除家长-
      * @param id
      * @return
      */
