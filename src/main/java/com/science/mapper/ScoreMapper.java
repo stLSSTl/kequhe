@@ -14,7 +14,6 @@ public interface ScoreMapper {
 
     public Integer insertScore(Score score);
 
-    public Integer saveScore(Score score);
 
     public Integer modifyScore(Score score);
 

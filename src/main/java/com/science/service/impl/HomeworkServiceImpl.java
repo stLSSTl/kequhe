@@ -83,7 +83,6 @@ public class HomeworkServiceImpl implements IHomeworkService {
         if(homeworkMapper.findSubmissionBySubmissionId(studentSubmission.getSubmissionId())!=null){
             throw new StudentSubmissionIdDuplicatedException("该提交记录已经存在");
         }
-
         Integer rows = homeworkMapper.insertSubmission(studentSubmission);
         if(rows != 1) throw new InsertException("插入数据时出现未知错误");
     }
@@ -126,6 +125,28 @@ public class HomeworkServiceImpl implements IHomeworkService {
         studentSubmission.setSubmissionTime(new Date());
         studentSubmission.setContent(studentSubmissionDTO.getContent());
         return studentSubmission;
+    }
+
+    @Override
+    public void addMistake(int submissionId) {
+        if(homeworkMapper.findSubmissionBySubmissionId(submissionId)==null){
+            throw new StudentSubmissionNotFoundException("该提交记录已存在");
+        }
+        homeworkMapper.updateType1(submissionId);
+    }
+
+    @Override
+    public List<StudentSubmission> queryMistake(int studentId) {
+        List<StudentSubmission> studentSubmissions = homeworkMapper.findMistakeByStudentId(studentId);
+        return studentSubmissions;
+    }
+
+    @Override
+    public void deleteMistake(int submissionId) {
+        if(homeworkMapper.findSubmissionBySubmissionId(submissionId)==null){
+            throw new StudentSubmissionNotFoundException("该提交记录不存在");
+        }
+        homeworkMapper.updateType0(submissionId);
     }
 
 }

@@ -12,6 +12,8 @@ import com.science.entity.StudentSubmission;
 import com.science.service.IAliOssService;
 import com.science.service.IHomeworkService;
 import com.science.util.JsonResult;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -163,6 +165,40 @@ public class HomeworkController extends BaseController{
     public JsonResult<Homework> StudentCheckOne(@PathVariable("homeworkId") int homeworkId){
         Homework homework = iHomeworkService.studentCheckOne(homeworkId);
         return new JsonResult<Homework>(OK,homework);
+    }
+
+    /**
+     * 学生添加错题
+     * @param submissionId
+     * @return
+     */
+    @GetMapping("addMistake/{submissionId}")
+    public JsonResult<Void> addMistake(@PathVariable("submissionId") int submissionId){
+        iHomeworkService.addMistake(submissionId);
+        return new JsonResult<Void>(OK);
+    }
+
+    /**
+     * 学生查看错题
+     * @param studentId
+     * @return
+     */
+    @GetMapping("queryMistake/{studentId}")
+    public JsonResult<List<StudentSubmission>> queryMistake(@PathVariable("studentId") int studentId){
+        List<StudentSubmission> studentSubmissions = iHomeworkService.queryMistake(studentId);
+        return new JsonResult<List<StudentSubmission>>(OK,studentSubmissions);
+    }
+
+
+    /**
+     * 学生删除错题
+     * @param submissionId
+     * @return
+     */
+    @DeleteMapping("deleteMistake/{submissionId}")
+    public JsonResult<Void> deleteMistake(@PathVariable("submissionId") int submissionId){
+        iHomeworkService.deleteMistake(submissionId);
+        return new JsonResult<>(OK);
     }
 
 }
