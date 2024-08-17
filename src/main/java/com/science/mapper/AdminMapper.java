@@ -1,10 +1,7 @@
 package com.science.mapper;
 
-import com.science.entity.CourseVideo;
-import com.science.entity.Parent;
 import com.science.entity.Student;
 import com.science.entity.Teacher;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -57,32 +54,6 @@ public interface AdminMapper {
      */
     public Integer modifyTeacher(Teacher teacher);
 
-    /**
-     * 根据userId查找家长
-     * @param userId
-     * @return
-     */
-    public Integer findParentById(@Param("userId") int userId);
-
-    /**
-     * 新增家长
-     * @param parent
-     * @return
-     */
-    public Integer insertParent(Parent parent);
-
-    /**
-     * 根据家长姓名删除家长
-     * @param id
-     * @return
-     */
-    public Integer deleteParentByUserId(int id);
-
-    /**
-     * 修改家长信息
-     * @param parent
-     */
-    public Integer modifyParent(Parent parent);
 
 
 }

@@ -1,6 +1,5 @@
 package com.science.controller;
 
-import com.science.dto.ParentDTO;
 import com.science.dto.StudentRegDTO;
 import com.science.dto.StudentUpdateDTO;
 import com.science.dto.TeacherDTO;
@@ -8,7 +7,6 @@ import com.science.service.IAdminService;
 import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
 
 @RestController
 @RequestMapping("admin")
@@ -85,35 +83,4 @@ public class AdminController extends BaseController {
         return new JsonResult<Void>(OK);
     }
 
-    /**
-     * 管理员新增家长
-     * @param parentDTO
-     * @return
-     */
-    @PostMapping("addParent")
-    public JsonResult<Void> addParent(@RequestBody ParentDTO parentDTO){
-        adminService.addParent(parentDTO);
-        return new JsonResult<Void>(OK);
-    }
-
-    /**
-     * 管理员根据家长id删除家长-
-     * @param id
-     * @return
-     */
-    @DeleteMapping("deleteParent/{id}")
-    public JsonResult<Void> deleteParent(@PathVariable("id") int id){
-        adminService.deleteParent(id);
-        return new JsonResult<Void>(OK);
-    }
-
-    /**
-     * 修改家长信息
-     * @return
-     */
-    @PostMapping("updateParent")
-    public JsonResult<Void> updateParent(@RequestBody ParentDTO parentDTO){
-        adminService.updateParent(parentDTO);
-        return new JsonResult<Void>(OK);
-    }
 }
