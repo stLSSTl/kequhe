@@ -4,10 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.science.dto.CourseVideoDTO;
 import com.science.entity.CourseVideo;
+import com.science.entity.VideoCollection;
 import com.science.service.IAliOssService;
 import com.science.service.ICourseVideoService;
 import com.science.util.JsonResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,5 +80,42 @@ public class VideoController extends BaseController{
     public JsonResult<List<CourseVideo>> getVideoByCreateUserName(String createUser){
         List<CourseVideo> list=courseVideoService.getVideosByCreateUser(createUser);
         return new JsonResult<>(OK,list);
+    }
+
+    /**
+     * 学生收藏视频
+     * @param videoId
+     * @param studentId
+     * @return
+     */
+    @PostMapping("collect")
+    public JsonResult<Void> collect(@RequestParam("videoId") int videoId,
+                                    @RequestParam("studentId") int studentId){
+        courseVideoService.addCollections(videoId,studentId);
+        return new JsonResult<Void>(OK);
+    }
+
+    /**
+     * 学生查看自己的收藏视频
+     * @param studentId
+     * @return
+     */
+    @GetMapping("collectionQuery/{studentId}")
+    public JsonResult<List<VideoCollection>> collectionQuery(@PathVariable("studentId") int studentId){
+        List<VideoCollection> videoCollections = courseVideoService.collectionQuery(studentId);
+        return new JsonResult<List<VideoCollection>>(OK,videoCollections);
+    }
+
+    /**
+     * 学生取消收藏
+     * @param videoId
+     * @param studentId
+     * @return
+     */
+    @DeleteMapping("deleteCollection")
+    public JsonResult<Void> deleteCollection(@RequestParam("videoId") int videoId,
+                                             @RequestParam("studentId") int studentId){
+        courseVideoService.deleteCollection(videoId,studentId);
+        return new JsonResult<Void>(OK);
     }
 }

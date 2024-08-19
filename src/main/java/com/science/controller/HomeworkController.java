@@ -12,10 +12,14 @@ import com.science.entity.StudentSubmission;
 import com.science.service.IAliOssService;
 import com.science.service.IHomeworkService;
 import com.science.util.JsonResult;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,35 +32,64 @@ public class HomeworkController extends BaseController{
 
     /**
      * 老师发布作业
-     * @param homeworkReleaseDTO
+     * @param
      * @return
      */
     @PostMapping("release")
-    public JsonResult<Void> releaseHomework(@RequestBody HomeworkReleaseDTO homeworkReleaseDTO){
+    public JsonResult<Void> releaseHomework(@RequestParam int teacherId,
+                                            @RequestParam String homeworkName,
+                                            @RequestParam String content,
+                                            @RequestParam(required = false) MultipartFile picture,
+                                            @RequestParam(required = false) MultipartFile file,
+                                            @RequestParam String school,
+                                            @RequestParam String grade,
+                                            @RequestParam String classes,
+                                            @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Date deadline){
+        String mimeType;
+        String picturePath=null;
+        String filePath=null;
+        if(picture!=null){
+            mimeType=picture.getContentType();
+            picturePath=aliOssService.uploadFile(picture,mimeType);
+        }
+        if(file!=null){
+            mimeType=file.getContentType();
+            filePath=aliOssService.uploadFile(file,mimeType);
+        }
+        HomeworkReleaseDTO homeworkReleaseDTO=new HomeworkReleaseDTO();
+        homeworkReleaseDTO.setTeacherId(teacherId);
+        homeworkReleaseDTO.setHomeworkName(homeworkName);
+        homeworkReleaseDTO.setContent(content);
+        homeworkReleaseDTO.setPicture(picturePath);
+        homeworkReleaseDTO.setFile(filePath);
+        homeworkReleaseDTO.setSchool(school);
+        homeworkReleaseDTO.setGrade(grade);
+        homeworkReleaseDTO.setClasses(classes);
+        homeworkReleaseDTO.setDeadline(deadline);
         iHomeworkService.insertHomework(homeworkReleaseDTO);
         return new JsonResult<>(OK);
     }
 
     /**
      * 老师根据作业id删除作业
-     * @param id
+     * @param homeworkId
      * @return
      */
-    @DeleteMapping("delete/{id}")
-    public JsonResult<Void> deleteHomework(@PathVariable("id") int id){
-        iHomeworkService.deleteHomework(id);
+    @DeleteMapping("delete/{homeworkId}")
+    public JsonResult<Void> deleteHomework(@PathVariable("homeworkId") int homeworkId){
+        iHomeworkService.deleteHomework(homeworkId);
         return new JsonResult<Void>(OK);
     }
 
     /**
      * 根据老师id，查看该老师布置的所有作业
      * 例如，老师点开“我的作业”页面，会显示自己布置的作业
-     * @param id
+     * @param teacherId
      * @return
      */
-    @GetMapping("teacherCheckAll/{id}")
-    public JsonResult<List<Homework>> teacherCheckAll(@PathVariable("id") int id){
-        List<Homework> homeworks = iHomeworkService.teacherCheckAll(id);
+    @GetMapping("teacherCheckAll/{teacherId}")
+    public JsonResult<List<Homework>> teacherCheckAll(@PathVariable("teacherId") int teacherId){
+        List<Homework> homeworks = iHomeworkService.teacherCheckAll(teacherId);
         return new JsonResult<List<Homework>>(OK,homeworks);
     }
 
@@ -66,12 +99,12 @@ public class HomeworkController extends BaseController{
      * 返回前端的是学生的提交信息
      * 老师在“我的作业”页面选择任一自己布置的作业，点击查看完成情况
      * 因此就不需要teacherId了，因为在“我的页面”里面显示的都是该老师布置的作业
-     * @param id
+     * @param homeworkId
      * @return
      */
-    @GetMapping("teacherCheckOne/{id}")
-    public JsonResult<List<StudentSubmission>> teacherCheckOne(@PathVariable("id") int id){
-        List<StudentSubmission> studentSubmissions = iHomeworkService.teacherCheckOne(id);
+    @GetMapping("teacherCheckOne/{homeworkId}")
+    public JsonResult<List<StudentSubmission>> teacherCheckOne(@PathVariable("homeworkId") int homeworkId){
+        List<StudentSubmission> studentSubmissions = iHomeworkService.teacherCheckOne(homeworkId);
         return new JsonResult<List<StudentSubmission>>(OK,studentSubmissions);
     }
 
@@ -163,6 +196,40 @@ public class HomeworkController extends BaseController{
     public JsonResult<Homework> StudentCheckOne(@PathVariable("homeworkId") int homeworkId){
         Homework homework = iHomeworkService.studentCheckOne(homeworkId);
         return new JsonResult<Homework>(OK,homework);
+    }
+
+    /**
+     * 学生添加错题
+     * @param submissionId
+     * @return
+     */
+    @GetMapping("addMistake/{submissionId}")
+    public JsonResult<Void> addMistake(@PathVariable("submissionId") int submissionId){
+        iHomeworkService.addMistake(submissionId);
+        return new JsonResult<Void>(OK);
+    }
+
+    /**
+     * 学生查看错题
+     * @param studentId
+     * @return
+     */
+    @GetMapping("queryMistake/{studentId}")
+    public JsonResult<List<StudentSubmission>> queryMistake(@PathVariable("studentId") int studentId){
+        List<StudentSubmission> studentSubmissions = iHomeworkService.queryMistake(studentId);
+        return new JsonResult<List<StudentSubmission>>(OK,studentSubmissions);
+    }
+
+
+    /**
+     * 学生删除错题
+     * @param submissionId
+     * @return
+     */
+    @DeleteMapping("deleteMistake/{submissionId}")
+    public JsonResult<Void> deleteMistake(@PathVariable("submissionId") int submissionId){
+        iHomeworkService.deleteMistake(submissionId);
+        return new JsonResult<>(OK);
     }
 
 }

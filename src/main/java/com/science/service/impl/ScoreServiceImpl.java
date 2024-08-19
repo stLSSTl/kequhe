@@ -79,7 +79,7 @@ public class ScoreServiceImpl implements IScoreService {
                 score.setExamName(row.getCell(7).getStringCellValue());
                 score.setExamDate(row.getCell(8).getDateCellValue());
 
-                Integer rows = scoreMapper.saveScore(score);
+                Integer rows = scoreMapper.insertScore(score);
                 if(rows != 1)   throw new InsertException("插入数据时出现未知错误");
             }
         }

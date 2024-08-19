@@ -71,5 +71,6 @@ public class AliOssUtil {
         //那fileUrl.indexOf(endpoint)就是找到endpoint的起始位置 最后加1是因为有'/'
         return fileUrl.substring(endpointStartIndex);
     }
+
 }
 

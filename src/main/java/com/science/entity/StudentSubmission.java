@@ -23,6 +23,7 @@ public class StudentSubmission implements Serializable {
     private String picture;
     private String sound;
     private SubmissionStatus status;
+    private int type;
     private LevelEnum level;
     private String feedback;
 

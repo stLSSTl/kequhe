@@ -22,4 +22,19 @@
     <select id="getVideosByCreateUser" resultType="com.science.entity.CourseVideo">
         select * from t_course_video where create_user=#{createUser}
     </select>
+    <insert id="insertCollection" useGeneratedKeys="true" keyProperty="id">
+        insert into t_video_collection(
+                                       id, video_id, video_name, cover_url, student_id
+        ) VALUES (
+                  #{id},#{videoId},#{videoName},#{coverUrl},#{studentId}
+                         )
+    </insert>
+    <select id="findCollections" resultType="com.science.entity.VideoCollection">
+        select * from t_video_collection where student_id = #{studentId}
+    </select>
+    <delete id="deleteCollection" parameterType="java.lang.Integer">
+        delete from t_video_collection
+        where video_id = #{videoId}
+            <if test="studentId != null">and student_id = #{studentId}</if>
+    </delete>
 </mapper>

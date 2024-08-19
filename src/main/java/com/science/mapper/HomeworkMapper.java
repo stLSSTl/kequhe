@@ -30,4 +30,9 @@ public interface HomeworkMapper {
 
     public Integer updateSubmissionByStudent(StudentSubmission studentSubmission);
 
+    public Integer updateType1(@Param("submissionId") int submissionId);
+
+    public List<StudentSubmission> findMistakeByStudentId(@Param("studentId") int studentId);
+
+    public Integer updateType0(@Param("submissionId") int submissionId);
 }

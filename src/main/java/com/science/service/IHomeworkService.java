@@ -20,4 +20,7 @@ public interface IHomeworkService {
     public List<Homework> studentCheckAll(int studentId);
     public Homework studentCheckOne(int homeworkId);
     public StudentSubmission convertToEntity(StudentSubmissionDTO studentSubmissionDTO);
+    public void addMistake(int submissionId);
+    public List<StudentSubmission> queryMistake(int studentId);
+    public void deleteMistake(int submissionId);
 }

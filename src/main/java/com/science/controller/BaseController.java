@@ -92,6 +92,9 @@ public class BaseController {
         } else if (e instanceof StudentSubmissionIdDuplicatedException) {
             jsonResult.setState(4022);
             jsonResult.setMessage("提交记录已经存在的异常");
+        } else if (e instanceof NotificationIdDuplicatedException) {
+            jsonResult.setState(4023);
+            jsonResult.setMessage("通知已经存在的异常");
         } else if (e instanceof AIPainterException) {
             jsonResult.setState(5005);//宽泛异常暂时用5xxx跟具体异常4xxx区分
             jsonResult.setMessage("AI绘图发生未知异常");

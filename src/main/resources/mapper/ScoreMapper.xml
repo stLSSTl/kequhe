@@ -18,11 +18,6 @@
                          )
     </insert>
 
-    <!--使用文件上传的方式新增成绩-->
-    <insert id="saveScore">
-        INSERT INTO t_score (score_id, student_id, student_name, school, grade, classes, score, exam_name, exam_date)
-        VALUES (#{scoreId}, #{studentId}, #{studentName},#{school},#{grade},#{classes}, #{score}, #{examName}, #{examDate})
-    </insert>
 
     <update id="modifyScore" parameterType="com.science.entity.Score">
         UPDATE t_score SET
