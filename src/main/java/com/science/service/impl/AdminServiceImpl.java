@@ -1,10 +1,8 @@
 package com.science.service.impl;
 
-import com.science.dto.ParentDTO;
 import com.science.dto.StudentRegDTO;
 import com.science.dto.StudentUpdateDTO;
 import com.science.dto.TeacherDTO;
-import com.science.entity.Parent;
 import com.science.entity.Student;
 import com.science.entity.Teacher;
 import com.science.mapper.AdminMapper;
@@ -138,63 +136,6 @@ public class AdminServiceImpl implements IAdminService {
 
         //插入数据库
         Integer rows = adminMapper.modifyTeacher(teacher);
-        if(rows != 1){
-            throw new UpdateException("更新数据时产生未知异常");
-        }
-    }
-
-    @Override
-    public void addParent(ParentDTO parentDTO) {
-        //先判断该家长是否存在
-        Integer res = adminMapper.findParentById(parentDTO.getUserId());
-        if(res != null){
-            throw new ParentDuplicatedException("该家长已经存在");
-        }
-
-        Parent parent = new Parent();
-        parent.setParentId(parentDTO.getParentId());
-        parent.setUserId(parentDTO.getUserId());
-        parent.setParentName(parentDTO.getParentName());
-        parent.setParentPhone(parentDTO.getParentPhone());
-
-        //插入数据库
-        Integer rows = adminMapper.insertParent(parent);
-        if(rows != 1){
-            throw new InsertException("插入数据时产生未知异常");
-        }
-    }
-
-    @Override
-    public void deleteParent(int id) {
-        //先判断该家长是否存在
-        Integer res = adminMapper.findParentById(id);
-        if(res == null){
-            throw new ParentNotFoundException("该家长不存在");
-        }
-
-        //删除操作
-        Integer rows = adminMapper.deleteParentByUserId(id);
-        if(rows != 1){
-            throw new DeleteException("删除时产生未知异常");
-        }
-    }
-
-    @Override
-    public void updateParent(ParentDTO parentDTO) {
-        //先判断该家长是否存在
-        Integer res = adminMapper.findParentById(parentDTO.getUserId());
-        if(res == null){
-            throw new ParentNotFoundException("该家长不存在");
-        }
-
-        Parent parent = new Parent();
-        parent.setParentId(parentDTO.getParentId());
-        parent.setUserId(parentDTO.getUserId());
-        parent.setParentName(parentDTO.getParentName());
-        parent.setParentPhone(parentDTO.getParentPhone());
-
-        //更新操作
-        Integer rows = adminMapper.modifyParent(parent);
         if(rows != 1){
             throw new UpdateException("更新数据时产生未知异常");
         }

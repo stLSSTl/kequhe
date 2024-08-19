@@ -11,8 +11,8 @@ public class AIAnswerController extends BaseController{
     @Autowired
     private IAIAnswerService aiAnswerService;
     @GetMapping("/get_ai_answer")
-    public JsonResult<String> getAIAnswer() {
-        String aiAnswer = aiAnswerService.getAIAnswer();
+    public JsonResult<String> getAIAnswer(String question) {
+        String aiAnswer = aiAnswerService.getAIAnswer(question);
         return new JsonResult<>(200, aiAnswer);
     }
 }

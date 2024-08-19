@@ -43,13 +43,13 @@ public class BaseController {
             jsonResult.setMessage("该学生已存在的异常");
         }else if (e instanceof StudentNotFoundException) {
             jsonResult.setState(4005);
-            jsonResult.setMessage("该学生不存在的异常");
+            jsonResult.setMessage("该学生信息不存在的异常");
         }else if (e instanceof TeacherDuplicatedException) {
             jsonResult.setState(4006);
             jsonResult.setMessage("该教师已存在的异常");
         }else if (e instanceof TeacherNotFoundException) {
             jsonResult.setState(4007);
-            jsonResult.setMessage("该教师不存在的异常");
+            jsonResult.setMessage("该教师信息不存在的异常");
         }else if (e instanceof ParentDuplicatedException) {
             jsonResult.setState(4008);
             jsonResult.setMessage("该家长已存在的异常");

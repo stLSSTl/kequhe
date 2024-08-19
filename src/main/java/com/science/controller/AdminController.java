@@ -85,35 +85,4 @@ public class AdminController extends BaseController {
         return new JsonResult<Void>(OK);
     }
 
-    /**
-     * 管理员新增家长
-     * @param parentDTO
-     * @return
-     */
-    @PostMapping("addParent")
-    public JsonResult<Void> addParent(@RequestBody ParentDTO parentDTO){
-        adminService.addParent(parentDTO);
-        return new JsonResult<Void>(OK);
-    }
-
-    /**
-     * 管理员根据家长id删除家长
-     * @param userId
-     * @return
-     */
-    @DeleteMapping("deleteParent/{userId}")
-    public JsonResult<Void> deleteParent(@PathVariable("userId") int userId){
-        adminService.deleteParent(userId);
-        return new JsonResult<Void>(OK);
-    }
-
-    /**
-     * 修改家长信息
-     * @return
-     */
-    @PostMapping("updateParent")
-    public JsonResult<Void> updateParent(@RequestBody ParentDTO parentDTO){
-        adminService.updateParent(parentDTO);
-        return new JsonResult<Void>(OK);
-    }
 }

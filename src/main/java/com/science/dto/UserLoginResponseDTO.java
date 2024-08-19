@@ -8,4 +8,5 @@ public class UserLoginResponseDTO {
     private String username;
     private String avatar;
     private String userType;
+    private String gender;
 }

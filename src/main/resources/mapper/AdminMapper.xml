@@ -73,39 +73,4 @@
             user_id = #{userId}
         </where>
     </update>
-
-    <!--根据id查找家长-->
-    <select id="findParentById" resultType="java.lang.Integer">
-        select * from t_parents where user_id = #{userId}
-    </select>
-
-    <!--新增家长-->
-    <insert id="insertParent" useGeneratedKeys="true" keyProperty="parentId">
-        insert into t_parents(
-            parent_id, user_id, parent_name, parent_phone
-        ) VALUES(
-            #{parentId},#{userId},#{parentName},#{parentPhone}
-               )
-    </insert>
-
-    <!--根据家长id删除家长-->
-    <delete id="deleteParentByUserId" parameterType="java.lang.Integer">
-        delete from t_parents
-        where user_id = #{id}
-    </delete>
-
-    <!--修改家长信息-->
-    <update id="modifyParent">
-        update t_parents
-        <set>
-            <if test="parentId != null">parent_id = #{parentId},</if>
-            <if test="userId != null">user_id = #{userId},</if>
-            <if test="parentName != null">parent_name = #{parentName},</if>
-            <if test="parentPhone != null">parent_phone = #{parentPhone},</if>
-        </set>
-        <where>
-            user_id = #{userId}
-        </where>
-    </update>
-
 </mapper>

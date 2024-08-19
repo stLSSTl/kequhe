@@ -36,7 +36,7 @@ public class HomeworkController extends BaseController{
     @PostMapping("release")
     public JsonResult<Void> releaseHomework(@RequestBody HomeworkReleaseDTO homeworkReleaseDTO){
         iHomeworkService.insertHomework(homeworkReleaseDTO);
-        return new JsonResult<Void>(OK);
+        return new JsonResult<>(OK);
     }
 
     /**

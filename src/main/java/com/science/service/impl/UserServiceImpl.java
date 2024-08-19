@@ -1,18 +1,18 @@
 package com.science.service.impl;
 
-import com.science.dto.FeedbackDTO;
 import com.science.dto.UserLoginRequestDTO;
 import com.science.dto.UserLoginResponseDTO;
 import com.science.dto.UserRegDTO;
-import com.science.entity.Feedback;
+import com.science.entity.Student;
 import com.science.entity.User;
+import com.science.mapper.StudentMapper;
+import com.science.mapper.TeacherMapper;
 import com.science.mapper.UserMapper;
 import com.science.service.IUserService;
 import com.science.service.ex.*;
 import com.science.util.AliOssUtil;
 import com.science.util.JWTUtil;
 import com.science.util.UserLoginResult;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -24,6 +24,10 @@ import java.util.UUID;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private StudentMapper studentMapper;
+    @Autowired
+    private TeacherMapper teacherMapper;
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
@@ -70,6 +74,7 @@ public class UserServiceImpl implements IUserService {
         UserLoginResponseDTO userLoginResponseDTO=new UserLoginResponseDTO();
         String username = userLoginRequestDTO.getUsername();
         String password = userLoginRequestDTO.getPassword();
+        Integer userTypeId=null;
         User result = userMapper.findByUsername(username);
         if(result == null){
             throw new AccountNotFoundException("账号不存在");
@@ -84,13 +89,29 @@ public class UserServiceImpl implements IUserService {
         if(!password.equals(result.getPassword())){
             throw new PasswordErrorException("密码错误");
         }
+
         String jwtToken;
         try{
             jwtToken=jwtUtil.createToken(username);
         }catch (JWTCreationException e){
             throw new JWTCreationException("生成jwt令牌出错",e);
         }
-        UserLoginResult userLoginResult=new UserLoginResult(userLoginResponseDTO,jwtToken);
+
+        if(result.getUserType().equals("student")){
+            if(studentMapper.findStudentByUserId(result.getUid())==null)
+            {
+                throw new StudentNotFoundException("学生信息未完善");
+            }else {
+                userTypeId=studentMapper.findStudentByUserId(result.getUid()).getStudentId();
+            }
+        } else if (result.getUserType().equals("teacher")) {
+            if(teacherMapper.findTeacherByUserId(result.getUid())==null){
+                throw new TeacherNotFoundException("教师信息为完善");
+            }else {
+                userTypeId=teacherMapper.findTeacherByUserId(result.getUid()).getTeacherId();
+            }
+        }
+        UserLoginResult userLoginResult=new UserLoginResult(userLoginResponseDTO,jwtToken,userTypeId);
         return userLoginResult;
     }
 

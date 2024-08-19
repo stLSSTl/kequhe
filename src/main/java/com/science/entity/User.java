@@ -18,6 +18,7 @@ public class User implements Serializable {
     private String password;
     private String salt;//不需要前端输入
     private String userType;
+    private String gender;
     private Integer isDelete;//不需要前端输入
     private String avatar;
     private String createUser;//不需要前端输入
