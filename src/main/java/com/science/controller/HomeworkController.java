@@ -15,9 +15,11 @@ import com.science.util.JsonResult;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,11 +32,40 @@ public class HomeworkController extends BaseController{
 
     /**
      * 老师发布作业
-     * @param homeworkReleaseDTO
+     * @param
      * @return
      */
     @PostMapping("release")
-    public JsonResult<Void> releaseHomework(@RequestBody HomeworkReleaseDTO homeworkReleaseDTO){
+    public JsonResult<Void> releaseHomework(@RequestParam int teacherId,
+                                            @RequestParam String homeworkName,
+                                            @RequestParam String content,
+                                            @RequestParam(required = false) MultipartFile picture,
+                                            @RequestParam(required = false) MultipartFile file,
+                                            @RequestParam String school,
+                                            @RequestParam String grade,
+                                            @RequestParam String classes,
+                                            @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Date deadline){
+        String mimeType;
+        String picturePath=null;
+        String filePath=null;
+        if(picture!=null){
+            mimeType=picture.getContentType();
+            picturePath=aliOssService.uploadFile(picture,mimeType);
+        }
+        if(file!=null){
+            mimeType=file.getContentType();
+            filePath=aliOssService.uploadFile(file,mimeType);
+        }
+        HomeworkReleaseDTO homeworkReleaseDTO=new HomeworkReleaseDTO();
+        homeworkReleaseDTO.setTeacherId(teacherId);
+        homeworkReleaseDTO.setHomeworkName(homeworkName);
+        homeworkReleaseDTO.setContent(content);
+        homeworkReleaseDTO.setPicture(picturePath);
+        homeworkReleaseDTO.setFile(filePath);
+        homeworkReleaseDTO.setSchool(school);
+        homeworkReleaseDTO.setGrade(grade);
+        homeworkReleaseDTO.setClasses(classes);
+        homeworkReleaseDTO.setDeadline(deadline);
         iHomeworkService.insertHomework(homeworkReleaseDTO);
         return new JsonResult<>(OK);
     }

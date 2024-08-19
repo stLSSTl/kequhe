@@ -22,7 +22,6 @@ public class Feedback implements Serializable {
 
     public enum UserType{
         student,
-        teacher,
-        parent
+        teacher
     }
 }

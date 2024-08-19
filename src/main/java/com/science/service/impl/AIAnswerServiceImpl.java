@@ -15,7 +15,7 @@ public class AIAnswerServiceImpl implements IAIAnswerService {
     private RestTemplate restTemplate;
     @Override
     public String getAIAnswer(String question) {
-        String url = "http://localhost:5000/get_answer";
+        String url = "http://121.40.20.34:5000/get_answer";
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("question", question);
         Map response = restTemplate.postForObject(url, requestBody, Map.class);

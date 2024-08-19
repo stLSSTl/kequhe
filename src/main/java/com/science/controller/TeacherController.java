@@ -12,8 +12,10 @@ import com.science.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("teachers")
@@ -47,15 +49,22 @@ public class TeacherController extends BaseController{
         return new JsonResult<>(OK,list);
     }
     @PostMapping("student/random")
-    public JsonResult<Student> getRandomStudent(@RequestBody SchoolClassInfo schoolClassInfo){
+    public JsonResult<List<Student>> getRandomStudent(@RequestBody SchoolClassInfo schoolClassInfo,@RequestParam int n){
         List<Student> list=teacherService.getStudentByClassInfo(schoolClassInfo);
         if(list==null||list.isEmpty()){
             throw new GetRandomStudentException("获取学生表单异常");
         }
+        if (n > list.size()) {
+            n = list.size();
+        }
         Random random=new Random();
+        Collections.shuffle(list,random);
+        List<Student> randomStudent=list.stream().limit(n).collect(Collectors.toList());
+        /*
         int randomIndex=random.nextInt(list.size());
         Student student=list.get(randomIndex);
-        return new JsonResult<>(OK,student);
+         */
+        return new JsonResult<>(OK,randomStudent);
     }
     /**
      * 添加课堂互动记录

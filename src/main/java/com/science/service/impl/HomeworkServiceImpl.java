@@ -29,10 +29,6 @@ public class HomeworkServiceImpl implements IHomeworkService {
 
     @Override
     public void insertHomework(HomeworkReleaseDTO homeworkReleaseDTO) {
-        //先判断传回的作业id是否已经存在
-        Homework res = homeworkMapper.findByHomeworkId(homeworkReleaseDTO.getHomeworkId());
-        if(res != null) throw new HomeworkIdDuplicatedException("该作业已经存在");
-
         Homework homework = new Homework();
         BeanUtils.copyProperties(homeworkReleaseDTO,homework);
 
