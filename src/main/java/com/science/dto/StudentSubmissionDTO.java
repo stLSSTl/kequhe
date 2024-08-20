@@ -19,7 +19,5 @@ public class StudentSubmissionDTO implements Serializable {
     private int studentId;
     private String studentName;
     private String content;
-    private String file;
     private String picture;
-    private String sound;
 }

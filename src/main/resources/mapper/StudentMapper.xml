@@ -16,6 +16,9 @@
     <select id="findStudentByStudentId" resultType="com.science.entity.Student">
             SELECT * FROM t_students WHERE student_id=#{studentId}
     </select>
+    <select id="findStudentByName" resultType="com.science.entity.Student">
+        select * from t_students where student_name = #{studentName}
+    </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="studentId">
         INSERT INTO t_students(
             student_id,user_id,student_name,school,grade,classes,credit

@@ -8,7 +8,5 @@ import java.io.Serializable;
 public class SubmissionUpdateDTO implements Serializable {
     private int submissionId;
     private String content;
-    private String file;
     private String picture;
-    private String sound;
 }

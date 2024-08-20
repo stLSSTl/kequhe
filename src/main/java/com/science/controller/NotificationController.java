@@ -16,13 +16,29 @@ public class NotificationController extends BaseController{
     @Autowired
     INotificationService notificationService;
 
+
     /**
      * 教师发布通知
-     * @param notificationDTO
+     * @param teacherId
+     * @param title
+     * @param content
+     * @param grade
+     * @param classes
      * @return
      */
     @PostMapping("deliver")
-    public JsonResult<Void> deliver(@RequestBody NotificationDTO notificationDTO){
+    public JsonResult<Void> deliver(@RequestParam int teacherId,
+                                    @RequestParam String title,
+                                    @RequestParam String content,
+                                    @RequestParam String grade,
+                                    @RequestParam String classes) {
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setTeacherId(teacherId);
+        notificationDTO.setTitle(title);
+        notificationDTO.setContent(content);
+        notificationDTO.setGrade(grade);
+        notificationDTO.setClasses(classes);
+
         notificationService.deliver(notificationDTO);
         return new JsonResult<Void>(OK);
     }

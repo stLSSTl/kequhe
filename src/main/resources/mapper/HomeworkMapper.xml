@@ -34,9 +34,9 @@
     <!--新增作业-->
     <insert id="insertHomework" useGeneratedKeys="true" keyProperty="homeworkId">
         insert into t_homework(
-                               homework_id, teacher_id, homework_name, content, picture, file, school, grade, classes, deadline
+                               homework_id, teacher_id, homework_name, content, picture, school, grade, classes, deadline
         ) VALUES (
-                  #{homeworkId},#{teacherId},#{homeworkName},#{content},#{picture},#{file},#{school},#{grade},#{classes},#{deadline}
+                  #{homeworkId},#{teacherId},#{homeworkName},#{content},#{picture},#{school},#{grade},#{classes},#{deadline}
                          )
     </insert>
 
@@ -67,9 +67,9 @@
     <!--新增提交记录-->
     <insert id="insertSubmission" useGeneratedKeys="true" keyProperty="submissionId">
         insert into t_student_submission(
-                                         submission_id, homework_id, student_id, student_name, submission_time, content, file, picture, sound, type,status, level, feedback
+                                         submission_id, homework_id, student_id, student_name, submission_time, content, picture, type,status, level, feedback
         ) VALUES (
-                  #{submissionId},#{homeworkId},#{studentId},#{studentName},#{submissionTime},#{content},#{file},#{picture},#{sound},0 ,'uncorrected',null,null
+                  #{submissionId},#{homeworkId},#{studentId},#{studentName},#{submissionTime},#{content},#{picture},0 ,'uncorrected',null,null
                          )
     </insert>
 
@@ -78,9 +78,10 @@
         update t_student_submission set
                                         submission_time = #{submissionTime},
                                         content = #{content},
-                                        file = #{file},
                                         picture = #{picture},
-                                        sound = #{sound}
+                                        status = 'uncorrected',
+                                        level = null,
+                                        feedback = null
         where submission_id = #{submissionId}
 
     </update>
@@ -104,4 +105,9 @@
         set type = 0
         where submission_id = #{submissionId}
     </update>
+
+    <!--判断该提交记录表是否已经被批改-->
+    <select id="findStatusBySubmissionId" resultType="com.science.entity.StudentSubmission">
+        select * from t_student_submission where submission_id = #{submissionId} and status = 'corrected'
+    </select>
 </mapper>

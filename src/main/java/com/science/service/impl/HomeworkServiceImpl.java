@@ -38,9 +38,6 @@ public class HomeworkServiceImpl implements IHomeworkService {
 
     @Override
     public void deleteHomework(int id) {
-        //先判断传回的作业id是否已经存在
-        Homework res = homeworkMapper.findByHomeworkId(id);
-        if(res == null) throw new HomeworkNotFoundException("该作业不存在");
 
         Integer rows = homeworkMapper.deleteById(id);
         if(rows != 1)   throw new DeleteException("删除数据时出现未知错误");
@@ -75,19 +72,16 @@ public class HomeworkServiceImpl implements IHomeworkService {
 
     @Override
     public void submitHomework(StudentSubmission studentSubmission) {
-        //根据提交id判断该提交记录表是否已经存在
-        if(homeworkMapper.findSubmissionBySubmissionId(studentSubmission.getSubmissionId())!=null){
-            throw new StudentSubmissionIdDuplicatedException("该提交记录已经存在");
-        }
         Integer rows = homeworkMapper.insertSubmission(studentSubmission);
         if(rows != 1) throw new InsertException("插入数据时出现未知错误");
     }
 
     @Override
     public void updateSubmissionByStudent(SubmissionUpdateDTO submissionUpdateDTO) {
-        //根据提交id判断该提交记录表是否已经存在
-        if(homeworkMapper.findSubmissionBySubmissionId(submissionUpdateDTO.getSubmissionId())==null){
-            throw new StudentSubmissionNotFoundException("该提交记录不存在");
+        //可以修改作业的前提是这个作业还没有被老师批改
+        //如果已经被老师批改了，则不能修改，抛异常
+        if(homeworkMapper.findStatusBySubmissionId(submissionUpdateDTO.getSubmissionId()) != null){
+            throw new UpdateException("该作业已经被批改，不能修改");
         }
 
         StudentSubmission studentSubmission = new StudentSubmission();
@@ -125,9 +119,6 @@ public class HomeworkServiceImpl implements IHomeworkService {
 
     @Override
     public void addMistake(int submissionId) {
-        if(homeworkMapper.findSubmissionBySubmissionId(submissionId)==null){
-            throw new StudentSubmissionNotFoundException("该提交记录已存在");
-        }
         homeworkMapper.updateType1(submissionId);
     }
 

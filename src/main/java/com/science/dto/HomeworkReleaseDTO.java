@@ -12,7 +12,6 @@ public class HomeworkReleaseDTO implements Serializable {
     private String homeworkName;
     private String content;
     private String picture;
-    private String file;
     private String school;
     private String grade;
     private String classes;

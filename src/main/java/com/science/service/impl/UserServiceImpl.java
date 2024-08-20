@@ -5,7 +5,6 @@ import com.science.dto.UserLoginRequestDTO;
 import com.science.dto.UserLoginResponseDTO;
 import com.science.dto.UserRegDTO;
 import com.science.entity.Feedback;
-import com.science.entity.Student;
 import com.science.entity.User;
 import com.science.mapper.StudentMapper;
 import com.science.mapper.TeacherMapper;

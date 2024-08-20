@@ -40,28 +40,22 @@ public class HomeworkController extends BaseController{
                                             @RequestParam String homeworkName,
                                             @RequestParam String content,
                                             @RequestParam(required = false) MultipartFile picture,
-                                            @RequestParam(required = false) MultipartFile file,
                                             @RequestParam String school,
                                             @RequestParam String grade,
                                             @RequestParam String classes,
                                             @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Date deadline){
         String mimeType;
         String picturePath=null;
-        String filePath=null;
         if(picture!=null){
             mimeType=picture.getContentType();
             picturePath=aliOssService.uploadFile(picture,mimeType);
         }
-        if(file!=null){
-            mimeType=file.getContentType();
-            filePath=aliOssService.uploadFile(file,mimeType);
-        }
+
         HomeworkReleaseDTO homeworkReleaseDTO=new HomeworkReleaseDTO();
         homeworkReleaseDTO.setTeacherId(teacherId);
         homeworkReleaseDTO.setHomeworkName(homeworkName);
         homeworkReleaseDTO.setContent(content);
         homeworkReleaseDTO.setPicture(picturePath);
-        homeworkReleaseDTO.setFile(filePath);
         homeworkReleaseDTO.setSchool(school);
         homeworkReleaseDTO.setGrade(grade);
         homeworkReleaseDTO.setClasses(classes);
@@ -124,27 +118,18 @@ public class HomeworkController extends BaseController{
     /**
      * 学生提交作业
      * @param studentSubmissionDTOJson
-     * @param file
      * @param picture
-     * @param sound
      * @return
      * @throws JsonProcessingException
      */
     @PostMapping("submit")
     public JsonResult<Void> submitHomework(@RequestParam  String studentSubmissionDTOJson,
-                                           @RequestParam MultipartFile file,
-                                           @RequestParam MultipartFile picture,
-                                           @RequestParam MultipartFile sound)throws JsonProcessingException {
+                                           @RequestParam MultipartFile picture)throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         StudentSubmissionDTO studentSubmissionDTO = objectMapper.readValue(studentSubmissionDTOJson,StudentSubmissionDTO.class);
         StudentSubmission studentSubmission = iHomeworkService.convertToEntity(studentSubmissionDTO);
 
-        String mimeType,filePath,picturePath,soundPath;
-        if (file != null && !StringUtils.isEmpty(file.getOriginalFilename()) && !StringUtils.isEmpty(file.getContentType())) {
-            mimeType = file.getContentType();
-            filePath = aliOssService.uploadFile(file, mimeType);
-            studentSubmission.setFile(filePath);
-        }
+        String mimeType,picturePath;
 
         if(picture != null && !StringUtils.isEmpty(picture.getOriginalFilename()) && !StringUtils.isEmpty(picture.getContentType())) {
             mimeType = picture.getContentType();
@@ -152,28 +137,41 @@ public class HomeworkController extends BaseController{
             studentSubmission.setPicture(picturePath);
         }
 
-        if(sound != null && !StringUtils.isEmpty(sound.getOriginalFilename()) && !StringUtils.isEmpty(sound.getContentType())) {
-            mimeType = sound.getContentType();
-            soundPath = aliOssService.uploadFile(sound, mimeType);
-            studentSubmission.setSound(soundPath);
-        }
 
         iHomeworkService.submitHomework(studentSubmission);
         return new JsonResult<Void>(OK);
     }
 
 
-
     /**
      * 学生修改提交的作业
-     * @param submissionUpdateDTO
+     * @param submissionId
+     * @param content
+     * @param picture
      * @return
      */
     @PutMapping("updateSubmission")
-    public JsonResult<Void> updateSubmissionByStudent(@RequestBody SubmissionUpdateDTO submissionUpdateDTO){
+    public JsonResult<Void> updateSubmissionByStudent(@RequestParam int submissionId,
+                                                      @RequestParam String content,
+                                                      @RequestParam(required = false) MultipartFile picture){
+        String mimeType;
+        String picturePath=null;
+        if(picture!=null){
+            mimeType=picture.getContentType();
+            picturePath=aliOssService.uploadFile(picture,mimeType);
+        }
+
+        SubmissionUpdateDTO submissionUpdateDTO = new SubmissionUpdateDTO();
+        submissionUpdateDTO.setSubmissionId(submissionId);
+        submissionUpdateDTO.setContent(content);
+        submissionUpdateDTO.setPicture(picturePath);
         iHomeworkService.updateSubmissionByStudent(submissionUpdateDTO);
         return new JsonResult<Void>(OK);
     }
+
+
+
+
 
     /**
      * 学生查看自己的作业，场景：学生点开“我的作业”，里面会显示自己有哪些作业

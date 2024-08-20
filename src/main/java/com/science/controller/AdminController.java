@@ -1,6 +1,5 @@
 package com.science.controller;
 
-import com.science.dto.ParentDTO;
 import com.science.dto.StudentRegDTO;
 import com.science.dto.StudentUpdateDTO;
 import com.science.dto.TeacherDTO;

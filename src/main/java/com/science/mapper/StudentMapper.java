@@ -11,6 +11,7 @@ import java.util.List;
 public interface StudentMapper {
     public Student findStudentByUserId(@Param("userId") int userId);
     public Student findStudentByStudentId(int studentId);
+    public Student findStudentByName(String studentName);
     public Integer insert(Student student);
     public void updateCredit(int newCredit,int studentId);
     public int getCreditByStudentId(int studentId);

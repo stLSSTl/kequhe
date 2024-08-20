@@ -20,9 +20,6 @@ public class NotificationServiceImpl implements INotificationService {
 
     @Override
     public void deliver(NotificationDTO notificationDTO) {
-        //先根据id判断是否已经存在
-        Notification res = notificationMapper.findNotificationById(notificationDTO.getId());
-        if(res != null)     throw new NotificationIdDuplicatedException("通知不存在");
 
         Notification notification = new Notification();
         BeanUtils.copyProperties(notificationDTO,notification);

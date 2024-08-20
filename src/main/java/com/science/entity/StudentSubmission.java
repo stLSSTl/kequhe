@@ -19,9 +19,7 @@ public class StudentSubmission implements Serializable {
     private String studentName;
     private Date submissionTime;
     private String content;
-    private String file;
     private String picture;
-    private String sound;
     private SubmissionStatus status;
     private int type;
     private LevelEnum level;
